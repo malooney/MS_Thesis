@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(readr)
 library(dplyr)
+library(readxl)
 
 ```
 
@@ -31,7 +32,10 @@ IRI_week_translation_2008_2017 <- read_excel("~/Documents/IRI_Original_Data/Year
 
 main_data_GK_DK_MK <- rbind(beer_PANEL_GK_1635_1686, beer_PANEL_DK_1635_1686, beer_PANEL_MK_1635_1686)
 
-a <- merge(x=DEMOS, y=main_data_GK_DK_MK, by=c("Panelist ID", "PANID"), by.x=TRUE)
+merge_main_data_GK_DK_MK <- left_join(y=DEMOS, x=main_data_GK_DK_MK, by=c("PANID" = "Panelist ID"))
+
+merge_main_data_GK_DK_MK$`Combined Pre-Tax Income of HH` <- as.numeric(merge_main_data_GK_DK_MK$`Combined Pre-Tax Income of HH`) 
+
 
 ```
 

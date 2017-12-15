@@ -1,0 +1,39 @@
+---
+title: "General Notes"
+author: "Matthew Aaron Looney"
+date: "12/14/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(readr)
+library(DT)
+
+
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+
+
+DEMOS <- read_csv("~/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year11/External/beer/DEMOS.CSV")
+
+#beer_drug_1635_1686 <- read_table("~/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year11/External/beer/beer_drug_1635_1686")
+
+beer_PANEL_GK_1635_1686 <- read_csv("~/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year11/External/beer/beer_PANEL_GK_1635_1686.DAT")
+
+beer_PANEL_DK_1635_1686 <- read_csv("~/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year11/External/beer/beer_PANEL_DK_1635_1686.DAT")
+
+beer_PANEL_MK_1635_1686 <- read_csv("~/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year11/External/beer/beer_PANEL_MK_1635_1686.DAT")
+
+main_data_GK_DK_MK <- rbind(beer_PANEL_GK_1635_1686, beer_PANEL_DK_1635_1686, beer_PANEL_MK_1635_1686)
+
+```
+
+```{r echo=FALSE}
+Demos_names <- matrix(names(DEMOS), ncol=5)
+
+datatable(Demos_names)
+```
+

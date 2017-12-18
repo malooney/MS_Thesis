@@ -1,0 +1,30 @@
+---
+title: "Untitled"
+author: "Matthew Aaron Looney"
+date: "12/17/2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(readr)
+library(stargazer)
+```
+
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+merge_main_data_GK_DK_MK_Demos_Date_Store_Prod_Attr <- read_csv("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/merge_main_data_GK_DK_MK_Demos_Date_Store_Prod_Attr.csv")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+
+main_data_logit_Murova_dupli <- merge_main_data_GK_DK_MK_Demos_Date_Store_Prod_Attr[, c(10, 13, 15, 16, 17, 4, 6, 76)]
+
+```
+
+```{r echo=FALSE, message=FALSE, results='asis', cache=F, warning=FALSE}
+
+stargazer(main_data_logit_Murova_dupli, header=F, type="latex", summary = T, font.size = "small", notes= c(), notes.align= "l", flip = F, float = T, float.env = "table", title="Summary Statistics: Problem 2", median = F)
+
+```

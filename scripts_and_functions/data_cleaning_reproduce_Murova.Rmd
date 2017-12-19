@@ -68,7 +68,7 @@ merge_main_data_GK_DK_MK_Demos_Date_Store <- left_join(y=Delivery_Stores, x=merg
 
 merge_main_data_GK_DK_MK_Demos_Date_Store_Prod_Attr <- left_join(y=beer_prod_attr_edit, x=merge_main_data_GK_DK_MK_Demos_Date_Store, by=c("COLUPC" = "colCPU"))
 
-write.csv(merge_main_data_GK_DK_MK_Demos_Date_Store_Prod_Attr, file = "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/merge_main_data_GK_DK_MK_Demos_Date_Store_Prod_Attr.csv", row.names = FALSE)
+#write.csv(merge_main_data_GK_DK_MK_Demos_Date_Store_Prod_Attr, file = "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/merge_main_data_GK_DK_MK_Demos_Date_Store_Prod_Attr.csv", row.names = FALSE)
 
 
 

@@ -3,13 +3,15 @@ title: "Untitled"
 author: "Matthew Aaron Looney"
 date: "12/17/2017"
 output: pdf_document
+
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(readr)
 library(stargazer)
+library(texreg)
 ```
 
 
@@ -19,12 +21,90 @@ merge_main_data_GK_DK_MK_Demos_Date_Store_Prod_Attr <- read_csv("/Users/malooney
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 
-main_data_logit_Murova_dupli <- merge_main_data_GK_DK_MK_Demos_Date_Store_Prod_Attr[, c(10, 13, 15, 16, 17, 4, 6, 76)]
+main_data_logit_Murova_dupli <- as.data.frame(merge_main_data_GK_DK_MK_Demos_Date_Store_Prod_Attr[, c(10, 13, 15, 16, 17, 4, 6, 76)])
+
+################################################################################
+
+main_data_logit_Murova_dupli <- na.omit(main_data_logit_Murova_dupli)
+
+main_data_logit_Murova_dupli <- subset(main_data_logit_Murova_dupli, `Type of Residential Possession` != 3)
+
+main_data_logit_Murova_dupli <- subset(main_data_logit_Murova_dupli, `Education Level Reached by Household Head` != 0 & `Education Level Reached by Household Head` != 99)
+
+main_data_logit_Murova_dupli <- subset(main_data_logit_Murova_dupli, `Occupation Code of Household Head` != 98 & `Occupation Code of Household Head` != 99)
+
+main_data_logit_Murova_dupli <- subset(main_data_logit_Murova_dupli, IMPORTED_VS_DOMESTIC=="DOMESTIC" | IMPORTED_VS_DOMESTIC=="IMPORTED")
+
+data1 <- main_data_logit_Murova_dupli
+
+main_data_logit_Murova_dupli[,-7] <- lapply(main_data_logit_Murova_dupli[,-7], factor)
+
+
+income <- model.matrix( ~ `Combined Pre-Tax Income of HH` - 1, data=main_data_logit_Murova_dupli )
+
+residence <- model.matrix( ~ `Type of Residential Possession` - 1, data=main_data_logit_Murova_dupli )
+
+age <- model.matrix( ~ `Age Group Applied to Household Head` - 1, data=main_data_logit_Murova_dupli )
+
+edu <- model.matrix( ~ `Education Level Reached by Household Head` - 1, data=main_data_logit_Murova_dupli )
+
+occupation <- model.matrix( ~ `Occupation Code of Household Head` - 1, data=main_data_logit_Murova_dupli )
+
+i_vs_d <- model.matrix( ~ IMPORTED_VS_DOMESTIC - 1, data=main_data_logit_Murova_dupli )
+
+catagorical_Data <- data.frame(cbind(i_vs_d, income, residence, age, edu, occupation, dollars=main_data_logit_Murova_dupli$DOLLARS))
+
+write.csv(catagorical_Data, file = "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/catagorical_Data.csv", row.names = FALSE)
 
 ```
 
 ```{r echo=FALSE, message=FALSE, results='asis', cache=F, warning=FALSE}
 
-stargazer(main_data_logit_Murova_dupli, header=F, type="latex", summary = T, font.size = "small", notes= c(), notes.align= "l", flip = F, float = T, float.env = "table", title="Summary Statistics: Problem 2", median = F)
+stargazer(data1, header=F, type="latex", summary = T, title="Summary Statistics")
+
+stargazer(catagorical_Data, header=F, type="latex", summary = , title="Summary Statistics")
 
 ```
+
+\newpage
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+# write.csv(main_data_logit_Murova_dupli, file = "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_data_logit_Murova_dupli.csv", row.names = FALSE)
+# 
+#model_logit1 <- formula(IMPORTED_VS_DOMESTIC~  `Combined Pre-Tax Income of HH`+ `Type of Residential Possession`+ `Age Group Applied to Household Head`+ `Education Level Reached by Household Head`+ `Occupation Code of Household Head`+ DOLLARS)
+# 
+#glm_logit1 <- glm(model_logit1, data= main_data_logit_Murova_dupli, family= binomial(link= "logit"))
+# 
+# #stargazer(glm_logit1, header=F, type="latex", summary = T, font.size = "small", notes= c(), notes.align= "l", flip = F, float = T, float.env = "table", title="Regression output")
+# 
+#summary(glm_logit1)
+# 
+# require(MASS)
+# exp(cbind(coef(glm_logit1), confint(glm_logit1))) 
+ 
+ model_logit2 <- formula(catagorical_Data[,1]~ catagorical_Data[,3]+ catagorical_Data[,4]+ catagorical_Data[,5]+ catagorical_Data[,6]+ catagorical_Data[,7]+ catagorical_Data[,8]+ catagorical_Data[,9]+ catagorical_Data[,10]+ catagorical_Data[,11]+ catagorical_Data[,12]+ catagorical_Data[,13]+ catagorical_Data[,15]+ catagorical_Data[,17]+ catagorical_Data[,18]+ catagorical_Data[,19]+ catagorical_Data[,20]+ catagorical_Data[,21]+ catagorical_Data[,23]+ catagorical_Data[,24]+ catagorical_Data[,25]+ catagorical_Data[,26]+ catagorical_Data[,26]+ catagorical_Data[,28]+ catagorical_Data[,29]+ catagorical_Data[,31]+ catagorical_Data[,32]+ catagorical_Data[,33]+ catagorical_Data[,34]+ catagorical_Data[,35]+ catagorical_Data[,36]+ catagorical_Data[,37]+ catagorical_Data[,38]+ catagorical_Data[,39]+ catagorical_Data[,41])
+ 
+ glm_logit2 <- glm(model_logit2, data= catagorical_Data, family= binomial(link= "logit"))
+ 
+summary(glm_logit2)
+
+#stargazer(glm_logit2, header=F, type="latex", summary = T, font.size = "small", notes= c(), notes.align= "l", flip = F, float = T, float.env = "table", title="Regression output")
+ 
+# texreg(glm_logit2)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+

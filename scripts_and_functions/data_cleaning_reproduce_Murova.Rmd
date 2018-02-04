@@ -24,7 +24,9 @@ beer_PANEL_DK_1635_1686 <- read_csv("~/Documents/IRI_Original_Data/Year 10 and 1
 
 beer_PANEL_MK_1635_1686 <- read_csv("~/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year11/External/beer/beer_PANEL_MK_1635_1686.DAT")
 
+
 DEMOS <- read_csv("~/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year11/External/beer/DEMOS.CSV")
+
 
 IRI_week_translation_2008_2017 <- read_excel("~/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year11/External/beer/IRI week translation_2008_2017.xls", 
      col_types = c("numeric", "date", "date", 

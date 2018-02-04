@@ -26,36 +26,37 @@ library(feather)
 
 ```{r load data, cache=TRUE, include=FALSE, message=FALSE, warning=FALSE, echo=FALSE}
 
-#beer_drug_1583_1634 <- read.csv("~/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year10/beer/beer_drug_1583_1634", sep="")
+################################################################################
+# beer_drug_1583_1634 <- read.csv("~/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year10/beer/beer_drug_1583_1634", sep="")
+# 
+# beer_groc_1583_1634 <- read.csv("/Users/malooney/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year10/beer/beer_groc_1583_1634", sep="")
+#    
+# Delivery_Stores <- read_table("/Users/malooney/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year10/beer/Delivery_Stores")
+# 
+# IRI_week_translation_2008_2017 <- read_excel("/Users/malooney/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year10/beer/IRI week translation_2008_2017.xls", col_types = c("numeric", "date", "date", "skip", "skip", "skip"))
+# 
+# beer_prod_attr_2011_edit <- read_table("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_prod_attr_2011_edit")
+# 
+# prod11_beer <- read_excel("~/Documents/IRI_Original_Data/Year 8 and 9 DVD/parsed stub files 2008-2011/prod11_beer.xlsx")
+################################################################################
+#write_feather(beer_drug_1583_1634, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_drug_1583_1634_feather")
+beer_drug_1583_1634 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_drug_1583_1634_feather")
 
-#beer_groc_1583_1634 <- read.csv("/Users/malooney/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year10/beer/beer_groc_1583_1634", sep="")
-   
-#Delivery_Stores <- read_table("/Users/malooney/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year10/beer/Delivery_Stores")
+#write_feather(beer_groc_1583_1634, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_groc_1583_1634_feather")
+beer_groc_1583_1634 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_groc_1583_1634_feather")
 
-#IRI_week_translation_2008_2017 <- read_excel("/Users/malooney/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year10/beer/IRI week translation_2008_2017.xls", col_types = c("numeric", "date", "date", "skip", "skip", "skip"))
+#write_feather(Delivery_Stores, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/Delivery_Stores_feather")
+Delivery_Stores <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/Delivery_Stores_feather")
 
-#beer_prod_attr_2011_edit <- read_table("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_prod_attr_2011_edit")
+#write_feather(IRI_week_translation_2008_2017, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/IRI_week_translation_2008_2017_feather")
+IRI_week_translation_2008_2017 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/IRI_week_translation_2008_2017_feather")
 
-#prod11_beer <- read_excel("~/Documents/IRI_Original_Data/Year 8 and 9 DVD/parsed stub files 2008-2011/prod11_beer.xlsx")
+#write_feather(beer_prod_attr_2011_edit, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_prod_attr_2011_edit_feather")
+beer_prod_attr_2011_edit <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_prod_attr_2011_edit_feather")
 
-#write_feather(beer_drug_1583_1634, "beer_drug_1583_1634_feather")
-beer_drug_1583_1634 <- read_feather("beer_drug_1583_1634_feather")
-
-#write_feather(beer_groc_1583_1634, "beer_groc_1583_1634_feather")
-beer_groc_1583_1634 <- read_feather("beer_groc_1583_1634_feather")
-
-#write_feather(Delivery_Stores, "Delivery_Stores_feather")
-Delivery_Stores <- read_feather("Delivery_Stores_feather")
-
-#write_feather(IRI_week_translation_2008_2017, "IRI_week_translation_2008_2017_feather")
-IRI_week_translation_2008_2017 <- read_feather("IRI_week_translation_2008_2017_feather")
-
-#write_feather(beer_prod_attr_2011_edit, "beer_prod_attr_2011_edit_feather")
-beer_prod_attr_2011_edit <- read_feather("beer_prod_attr_2011_edit_feather")
-
-#write_feather(prod11_beer, "prod11_beer_feather")
-prod11_beer <- read_feather("prod11_beer_feather")
-
+#write_feather(prod11_beer, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/prod11_beer_feather")
+prod11_beer <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/prod11_beer_feather")
+################################################################################
 #data(county.fips)
 #View(county.fips)
 

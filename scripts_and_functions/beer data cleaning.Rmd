@@ -16,8 +16,8 @@ library(dplyr)
 library(readxl)
 library(maps)
 library(feather)
+library(stringr)
 
-# library(stringr)
 # library(zipcode)
 # library(xlsx)
 # library(ggmap)
@@ -38,7 +38,9 @@ library(feather)
 # beer_prod_attr_2011_edit <- read_table("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_prod_attr_2011_edit")
 # 
 # prod11_beer <- read_excel("~/Documents/IRI_Original_Data/Year 8 and 9 DVD/parsed stub files 2008-2011/prod11_beer.xlsx")
+
 ################################################################################
+
 #write_feather(beer_drug_1583_1634, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_drug_1583_1634_feather")
 beer_drug_1583_1634 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_drug_1583_1634_feather")
 
@@ -56,7 +58,9 @@ beer_prod_attr_2011_edit <- read_feather("/Users/malooney/Google Drive/digitalLi
 
 #write_feather(prod11_beer, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/prod11_beer_feather")
 prod11_beer <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/prod11_beer_feather")
+
 ################################################################################
+
 #data(county.fips)
 #View(county.fips)
 
@@ -65,7 +69,27 @@ prod11_beer <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_The
 ```{r manipulate data, cache=TRUE, include=FALSE, message=FALSE, warning=FALSE, echo=FALSE}
 
 
-beer_drug_and_groc <- rbind(beer_drug_1583_1634, beer_groc_1583_1634)
+main_beer_drug_and_groc <- rbind(beer_drug_1583_1634, beer_groc_1583_1634)
+
+## make UPC for main_beer_drug_and_groc
+i <-1
+temp <- list()
+temp_main <- data.frame(UPC=1:length(main_beer_drug_and_groc$SY))
+
+for(i in 1:length(temp_main$UPC)){
+  
+temp$SY <- str_pad(main_beer_drug_and_groc[i,3], 2, "left", pad="0")
+temp$GE <- str_pad(main_beer_drug_and_groc[i,4], 2, "left", pad="0")
+temp$VEND <- str_pad(main_beer_drug_and_groc[i,5], 5, "left", pad="0")
+temp$ITEM <- str_pad(main_beer_drug_and_groc[i,6], 5, "left", pad="0")
+
+temp$main <- paste(temp$SY, temp$GE, temp$VEND, temp$ITEM, sep="-")
+
+temp_main[i,1] <- temp$main
+
+i <- i+1
+
+}
 
 
 ```

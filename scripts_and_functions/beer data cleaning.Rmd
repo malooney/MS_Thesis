@@ -68,31 +68,75 @@ prod11_beer <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_The
 
 ```{r manipulate data, cache=TRUE, include=FALSE, message=FALSE, warning=FALSE, echo=FALSE}
 
-
+# join grocery store and drug store data
 main_beer_drug_and_groc <- rbind(beer_drug_1583_1634, beer_groc_1583_1634)
 
 ## make UPC for main_beer_drug_and_groc
-i <-1
-temp <- list()
-temp_main <- data.frame(UPC=1:length(main_beer_drug_and_groc$SY))
+upc_fun <- function(x){
 
-for(i in 1:length(temp_main$UPC)){
-  
-temp$SY <- str_pad(main_beer_drug_and_groc[i,3], 2, "left", pad="0")
-temp$GE <- str_pad(main_beer_drug_and_groc[i,4], 2, "left", pad="0")
-temp$VEND <- str_pad(main_beer_drug_and_groc[i,5], 5, "left", pad="0")
-temp$ITEM <- str_pad(main_beer_drug_and_groc[i,6], 5, "left", pad="0")
+  paste(
+    str_pad(x[1], 2, "left", pad="0"),
+    str_pad(x[2], 2, "left", pad="0"),
+    str_pad(x[3], 5, "left", pad="0"),
+    str_pad(x[4], 5, "left", pad="0"), sep="-")
+  }
 
-temp$main <- paste(temp$SY, temp$GE, temp$VEND, temp$ITEM, sep="-")
+temp <- main_beer_drug_and_groc[, 3:6]
+temp_main <- data.frame(upc=apply(temp, MARGIN = 1, upc_fun))
 
-temp_main[i,1] <- temp$main
+main_beer_drug_and_groc <- cbind(main_beer_drug_and_groc, temp_main)
 
-i <- i+1
+write_feather(main_beer_drug_and_groc, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_feather")
+main_beer_drug_and_groc <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_feather")
 
-}
+## join week codes, (IRI_week...) with main_beer_drug_and_groc file.
+main_beer_drug_and_groc <- left_join(y=IRI_week_translation_2008_2017, x=main_beer_drug_and_groc, by=c("WEEK" = "IRI Week"))
+write_feather(main_beer_drug_and_groc, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_feather")
+main_beer_drug_and_groc <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_feather")
 
+# join Delivery_Stores to main_beer_drug_and_groc
+main_beer_drug_and_groc <- left_join(y=Delivery_Stores, x=main_beer_drug_and_groc, by=c("IRI_KEY" = "IRI_KEY"))
+write_feather(main_beer_drug_and_groc, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_feather")
+main_beer_drug_and_groc <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_feather")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ## make UPC for beer_prod_attr_2011_edit
+upc_fun <- function(x){
+
+  paste(
+    str_pad(x[1], 2, "left", pad="0"),
+    str_pad(x[2], 2, "left", pad="0"),
+    str_pad(x[3], 5, "left", pad="0"),
+    str_pad(x[4], 5, "left", pad="0"), sep="-")
+  }
 
 ```
+
+
+
+
+
+
+
+
+
+
+
 
 
 

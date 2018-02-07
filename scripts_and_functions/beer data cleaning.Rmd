@@ -43,19 +43,15 @@ library(stringr)
 
 #write_feather(beer_drug_1583_1634, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_drug_1583_1634_feather")
 
-beer_drug_1583_1634 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_drug_1583_1634_feather")
+#beer_drug_1583_1634 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_drug_1583_1634_feather")
 
 #write_feather(beer_groc_1583_1634, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_groc_1583_1634_feather")
 
-beer_groc_1583_1634 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_groc_1583_1634_feather")
-
-#write_feather(Delivery_Stores, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/Delivery_Stores_feather")
-
-Delivery_Stores <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/Delivery_Stores_feather")
+#beer_groc_1583_1634 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_groc_1583_1634_feather")
 
 #write_feather(IRI_week_translation_2008_2017, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/IRI_week_translation_2008_2017_feather")
 
-IRI_week_translation_2008_2017 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/IRI_week_translation_2008_2017_feather")
+#IRI_week_translation_2008_2017 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/IRI_week_translation_2008_2017_feather")
 
 #write_feather(beer_prod_attr_2011_edit, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_prod_attr_2011_edit_feather")
 
@@ -64,6 +60,11 @@ beer_prod_attr_2011_edit <- read_feather("/Users/malooney/Google Drive/digitalLi
 #write_feather(prod11_beer, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/prod11_beer_feather")
 
 prod11_beer <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/prod11_beer_feather")
+
+#write_feather(Delivery_Stores, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/Delivery_Stores_feather")
+
+Delivery_Stores <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/Delivery_Stores_feather")
+
 
 ################################################################################
 
@@ -130,15 +131,16 @@ beer_prod_attr_2011_edit <- cbind(beer_prod_attr_2011_edit, temp_main)
 ################################################################################
 
 ################################################################################
-# join main_beer_drug_and_groc_2 to prod11_beer
-main_beer_drug_and_groc_2 <- left_join(y=prod11_beer, x=main_beer_drug_and_groc_2, by=c("upc" = "UPC"))
+# join main_beer_drug_and_groc_2 to prod11_beer and prod_beer_attr_2011_edit
 
+main_beer_drug_and_groc_2 <- left_join(x=main_beer_drug_and_groc_1, y=beer_prod_attr_2011_edit, by=c("upc" = "upc"))
 
+main_beer_drug_and_groc_3 <- left_join(x=main_beer_drug_and_groc_2, y=prod11_beer, by=c("upc" = "UPC"))
 ################################################################################
 
 ################################################################################
 # join Delivery_Stores to main_beer_drug_and_groc
-main_beer_drug_and_groc_2 <- left_join(x=main_beer_drug_and_groc_1, y=Delivery_Stores, by="IRI_KEY")
+main_beer_drug_and_groc_4 <- left_join(x=main_beer_drug_and_groc_3, y=Delivery_Stores, by="IRI_KEY")
 
 write_feather(main_beer_drug_and_groc_2, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_2_feather")
 

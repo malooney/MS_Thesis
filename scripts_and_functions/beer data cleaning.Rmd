@@ -3,9 +3,9 @@ title: "Untitled"
 author: "Matthew Aaron Looney"
 date: "12/14/2017"
 output:
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE, message=FALSE, warning=FALSE}
@@ -71,9 +71,9 @@ library(stringr)
 # #data(county.fips)
 # #View(county.fips)
 # 
-# ```
+```
 # 
-# ```{r manipulate data, cache=TRUE, include=FALSE, message=FALSE, warning=FALSE, echo=FALSE}
+```{r manipulate data, cache=TRUE, include=TRUE, message=FALSE, warning=FALSE, echo=FALSE}
 # 
 # ################################################################################
 # # join grocery store and drug store data
@@ -140,12 +140,7 @@ library(stringr)
 # write_feather(main_beer_drug_and_groc_3, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_3_feather")
 # 
 # main_beer_drug_and_groc_3 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_3_feather")
-# ################################################################################
-# 
-# 
-# 
-# 
-# 
+#################################################################################
 # ################################################################################
 # # join Delivery_Stores to main_beer_drug_and_groc
 # unique_Delivery_stores <- distinct(Delivery_Stores) # remove duplicate IRI_Key numbers
@@ -156,23 +151,27 @@ library(stringr)
 # 
 # main_beer_drug_and_groc_4 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
 ################################################################################
+# 
+# main_beer_drug_and_groc_4_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
+# 
+# # Show all potiential market names
+# mrkNames <- unique(main_beer_drug_and_groc_4_2010$Market_Name)
+# 
+# #write(mrkNames, file = "mrkNames", append = FALSE, sep = " ")
+# 
+# market1 <- "LOS ANGELES"
+# 
+# LA_data <- filter(main_beer_drug_and_groc_4_2010, Market_Name==market1)
+# 
+# rm(main_beer_drug_and_groc_4_2010, mrkNames)
+# 
+# LA_data_2010 <- LA_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
+# 
+# write_feather(LA_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/LA_data_2010_feather")
+#
+LA_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/LA_data_2010_feather")
 
-main_beer_drug_and_groc_4_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
-
-# Show all potiential market names
-mrkNames <- unique(main_beer_drug_and_groc_4_2010$Market_Name)
-
-#write(mrkNames, file = "mrkNames", append = FALSE, sep = " ")
-
-market1 <- "LOS ANGELES"
-
-LA_data <- filter(main_beer_drug_and_groc_4_2010, Market_Name==market1)
-
-rm(main_beer_drug_and_groc_4_2010, mrkNames)
-
-a <- LA_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
-
-
+plot(table(LA_data_2010$IMPORTED_VS_DOMESTIC))
 
 ```
 
@@ -193,30 +192,30 @@ a <- LA_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
 ```{r map, eval=FALSE, include=FALSE, message=FALSE, warning=FALSE, cache=TRUE, results='asis'}
 ################################################################################
    
-urlfile <-'http://www.psc.isr.umich.edu/dis/census/Features/tract2zip/MedianZIP-3.xlsx'
-destfile <- "census20062010.xlsx"
-download.file(urlfile, destfile, mode="wb")
-
-census <- xlsx::read.xlsx2(destfile, sheetName = "Median")
-   
-census <- census[c('Zip','Median..')]
-names(census) <- c('Zip','Median')
-census$Median <- as.character(census$Median)
-census$Median <- as.numeric(gsub(',','',census$Median))
-#print(head(census,5))
-   
-data(zipcode)
-census$Zip <- clean.zipcodes(census$Zip)
-   
-census <- merge(census, zipcode, by.x='Zip', by.y='zip')
-   
-map <-get_map(location="united states", zoom= 4,
-             maptype = "roadmap", source='google',color='color')
-   
-ggmap(map) + geom_point(
-  aes(x=longitude, y=latitude, colour=Median), 
-  data=census, alpha=.05, na.rm = T)  + 
-  scale_color_gradient(low="beige", high="blue")
+# urlfile <-'http://www.psc.isr.umich.edu/dis/census/Features/tract2zip/MedianZIP-3.xlsx'
+# destfile <- "census20062010.xlsx"
+# download.file(urlfile, destfile, mode="wb")
+# 
+# census <- xlsx::read.xlsx2(destfile, sheetName = "Median")
+#    
+# census <- census[c('Zip','Median..')]
+# names(census) <- c('Zip','Median')
+# census$Median <- as.character(census$Median)
+# census$Median <- as.numeric(gsub(',','',census$Median))
+# #print(head(census,5))
+#    
+# data(zipcode)
+# census$Zip <- clean.zipcodes(census$Zip)
+#    
+# census <- merge(census, zipcode, by.x='Zip', by.y='zip')
+#    
+# map <-get_map(location="united states", zoom= 4,
+#              maptype = "roadmap", source='google',color='color')
+#    
+# ggmap(map) + geom_point(
+#   aes(x=longitude, y=latitude, colour=Median), 
+#   data=census, alpha=.05, na.rm = T)  + 
+#   scale_color_gradient(low="beige", high="blue")
    
 ################################################################################
 ```

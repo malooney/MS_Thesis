@@ -157,13 +157,16 @@ write_feather(main_beer_drug_and_groc_4, "/Users/malooney/Google Drive/digitalLi
 main_beer_drug_and_groc_4 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
 ################################################################################
 
+# Show all potiential market names
+mrkNames <- unique(main_beer_drug_and_groc_4$Market_Name)
 
+#write(mrkNames, file = "mrkNames", append = FALSE, sep = " ")
 
+market1 <- "LOS ANGELES"
 
+LA_data <- filter(main_beer_drug_and_groc_4, Market_Name==market1)
 
-
-
-
+rm(main_beer_drug_and_groc_4, mrkNames)
 
 
 

@@ -27,148 +27,150 @@ library(stringr)
 ```{r load data, cache=TRUE, include=FALSE, message=FALSE, warning=FALSE, echo=FALSE}
 
 ################################################################################
-# beer_drug_1583_1634 <- read.csv("~/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year10/beer/beer_drug_1583_1634", sep="")
+# # beer_drug_1583_1634 <- read.csv("~/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year10/beer/beer_drug_1583_1634", sep="")
+# # 
+# # beer_groc_1583_1634 <- read.csv("/Users/malooney/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year10/beer/beer_groc_1583_1634", sep="")
+# #    
+# # Delivery_Stores <- read_table("/Users/malooney/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year10/beer/Delivery_Stores")
+# # 
+# # IRI_week_translation_2008_2017 <- read_excel("/Users/malooney/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year10/beer/IRI week translation_2008_2017.xls", col_types = c("numeric", "date", "date", "skip", "skip", "skip"))
+# # 
+# # beer_prod_attr_2011_edit <- read_table("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_prod_attr_2011_edit")
+# # 
+# # prod11_beer <- read_excel("~/Documents/IRI_Original_Data/Year 8 and 9 DVD/parsed stub files 2008-2011/prod11_beer.xlsx")
 # 
-# beer_groc_1583_1634 <- read.csv("/Users/malooney/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year10/beer/beer_groc_1583_1634", sep="")
-#    
-# Delivery_Stores <- read_table("/Users/malooney/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year10/beer/Delivery_Stores")
+# ################################################################################
 # 
-# IRI_week_translation_2008_2017 <- read_excel("/Users/malooney/Documents/IRI_Original_Data/Year 10 and 11 DVD/Year10/beer/IRI week translation_2008_2017.xls", col_types = c("numeric", "date", "date", "skip", "skip", "skip"))
+# #write_feather(beer_drug_1583_1634, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_drug_1583_1634_feather")
 # 
-# beer_prod_attr_2011_edit <- read_table("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_prod_attr_2011_edit")
+# #beer_drug_1583_1634 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_drug_1583_1634_feather")
 # 
-# prod11_beer <- read_excel("~/Documents/IRI_Original_Data/Year 8 and 9 DVD/parsed stub files 2008-2011/prod11_beer.xlsx")
-
+# #write_feather(beer_groc_1583_1634, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_groc_1583_1634_feather")
+# 
+# #beer_groc_1583_1634 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_groc_1583_1634_feather")
+# 
+# #write_feather(IRI_week_translation_2008_2017, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/IRI_week_translation_2008_2017_feather")
+# 
+# #IRI_week_translation_2008_2017 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/IRI_week_translation_2008_2017_feather")
+# 
+# #write_feather(beer_prod_attr_2011_edit, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_prod_attr_2011_edit_feather")
+# 
+# beer_prod_attr_2011_edit <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_prod_attr_2011_edit_feather")
+# 
+# #write_feather(prod11_beer, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/prod11_beer_feather")
+# 
+# prod11_beer <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/prod11_beer_feather")
+# 
+# #write_feather(Delivery_Stores, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/Delivery_Stores_feather")
+# 
+# Delivery_Stores <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/Delivery_Stores_feather")
+# 
+# 
+# ################################################################################
+# 
+# #data(county.fips)
+# #View(county.fips)
+# 
+# ```
+# 
+# ```{r manipulate data, cache=TRUE, include=FALSE, message=FALSE, warning=FALSE, echo=FALSE}
+# 
+# ################################################################################
+# # join grocery store and drug store data
+# main_beer_drug_and_groc <- rbind(beer_drug_1583_1634, beer_groc_1583_1634)
+# ################################################################################
+# 
+# ################################################################################
+# ## make UPC for main_beer_drug_and_groc
+# upc_fun <- function(x){
+# 
+#   paste(
+#     str_pad(x[1], 2, "left", pad="0"),
+#     str_pad(x[2], 2, "left", pad="0"),
+#     str_pad(x[3], 5, "left", pad="0"),
+#     str_pad(x[4], 5, "left", pad="0"), sep="-")
+#   }
+# 
+# temp <- main_beer_drug_and_groc[, 3:6]
+# 
+# temp_main <- data.frame(upc=apply(temp, MARGIN = 1, upc_fun))
+# 
+# main_beer_drug_and_groc <- cbind(main_beer_drug_and_groc, temp_main)
+# 
+# write_feather(main_beer_drug_and_groc, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_feather")
+# 
+# main_beer_drug_and_groc <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_feather")
+# ################################################################################
+# 
+# ################################################################################
+# ## join week codes, (IRI_week...) with main_beer_drug_and_groc file.
+# main_beer_drug_and_groc_1 <- left_join(x=main_beer_drug_and_groc, y=IRI_week_translation_2008_2017, by=c("WEEK" = "IRI Week"))
+# 
+# write_feather(main_beer_drug_and_groc_1, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_1_feather")
+# 
+# main_beer_drug_and_groc_1 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_1_feather")
+# ################################################################################
+# 
+# ################################################################################
+# ## make UPC for beer_prod_attr_2011_edit
+# upc_fun <- function(x){
+# 
+#   paste(
+#     str_pad(x[1], 2, "left", pad="0"),
+#     str_pad(x[2], 2, "left", pad="0"),
+#     str_pad(x[3], 5, "left", pad="0"),
+#     str_pad(x[4], 5, "left", pad="0"), sep="-")
+#   }
+# 
+# temp <- beer_prod_attr_2011_edit[, 1:4]
+# 
+# temp_main <- data.frame(upc=apply(temp, MARGIN = 1, upc_fun))
+# 
+# beer_prod_attr_2011_edit <- cbind(beer_prod_attr_2011_edit, temp_main)
+# 
+# ################################################################################
+# 
+# ################################################################################
+# # join main_beer_drug_and_groc_2 to prod11_beer and prod_beer_attr_2011_edit
+# 
+# main_beer_drug_and_groc_2 <- left_join(x=main_beer_drug_and_groc_1, y=beer_prod_attr_2011_edit, by=c("upc" = "upc"))
+# 
+# main_beer_drug_and_groc_3 <- left_join(x=main_beer_drug_and_groc_2, y=prod11_beer, by=c("upc" = "UPC"))
+# 
+# write_feather(main_beer_drug_and_groc_3, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_3_feather")
+# 
+# main_beer_drug_and_groc_3 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_3_feather")
+# ################################################################################
+# 
+# 
+# 
+# 
+# 
+# ################################################################################
+# # join Delivery_Stores to main_beer_drug_and_groc
+# unique_Delivery_stores <- distinct(Delivery_Stores) # remove duplicate IRI_Key numbers
+# 
+# main_beer_drug_and_groc_4 <- left_join(x=main_beer_drug_and_groc_3, y=unique_Delivery_stores, by="IRI_KEY")
+# 
+# write_feather(main_beer_drug_and_groc_4, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
+# 
+# main_beer_drug_and_groc_4 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
 ################################################################################
 
-#write_feather(beer_drug_1583_1634, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_drug_1583_1634_feather")
-
-#beer_drug_1583_1634 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_drug_1583_1634_feather")
-
-#write_feather(beer_groc_1583_1634, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_groc_1583_1634_feather")
-
-#beer_groc_1583_1634 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_groc_1583_1634_feather")
-
-#write_feather(IRI_week_translation_2008_2017, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/IRI_week_translation_2008_2017_feather")
-
-#IRI_week_translation_2008_2017 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/IRI_week_translation_2008_2017_feather")
-
-#write_feather(beer_prod_attr_2011_edit, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_prod_attr_2011_edit_feather")
-
-beer_prod_attr_2011_edit <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/beer_prod_attr_2011_edit_feather")
-
-#write_feather(prod11_beer, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/prod11_beer_feather")
-
-prod11_beer <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/prod11_beer_feather")
-
-#write_feather(Delivery_Stores, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/Delivery_Stores_feather")
-
-Delivery_Stores <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/Delivery_Stores_feather")
-
-
-################################################################################
-
-#data(county.fips)
-#View(county.fips)
-
-```
-
-```{r manipulate data, cache=TRUE, include=FALSE, message=FALSE, warning=FALSE, echo=FALSE}
-
-################################################################################
-# join grocery store and drug store data
-main_beer_drug_and_groc <- rbind(beer_drug_1583_1634, beer_groc_1583_1634)
-################################################################################
-
-################################################################################
-## make UPC for main_beer_drug_and_groc
-upc_fun <- function(x){
-
-  paste(
-    str_pad(x[1], 2, "left", pad="0"),
-    str_pad(x[2], 2, "left", pad="0"),
-    str_pad(x[3], 5, "left", pad="0"),
-    str_pad(x[4], 5, "left", pad="0"), sep="-")
-  }
-
-temp <- main_beer_drug_and_groc[, 3:6]
-
-temp_main <- data.frame(upc=apply(temp, MARGIN = 1, upc_fun))
-
-main_beer_drug_and_groc <- cbind(main_beer_drug_and_groc, temp_main)
-
-write_feather(main_beer_drug_and_groc, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_feather")
-
-main_beer_drug_and_groc <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_feather")
-################################################################################
-
-################################################################################
-## join week codes, (IRI_week...) with main_beer_drug_and_groc file.
-main_beer_drug_and_groc_1 <- left_join(x=main_beer_drug_and_groc, y=IRI_week_translation_2008_2017, by=c("WEEK" = "IRI Week"))
-
-write_feather(main_beer_drug_and_groc_1, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_1_feather")
-
-main_beer_drug_and_groc_1 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_1_feather")
-################################################################################
-
-################################################################################
-## make UPC for beer_prod_attr_2011_edit
-upc_fun <- function(x){
-
-  paste(
-    str_pad(x[1], 2, "left", pad="0"),
-    str_pad(x[2], 2, "left", pad="0"),
-    str_pad(x[3], 5, "left", pad="0"),
-    str_pad(x[4], 5, "left", pad="0"), sep="-")
-  }
-
-temp <- beer_prod_attr_2011_edit[, 1:4]
-
-temp_main <- data.frame(upc=apply(temp, MARGIN = 1, upc_fun))
-
-beer_prod_attr_2011_edit <- cbind(beer_prod_attr_2011_edit, temp_main)
-
-################################################################################
-
-################################################################################
-# join main_beer_drug_and_groc_2 to prod11_beer and prod_beer_attr_2011_edit
-
-main_beer_drug_and_groc_2 <- left_join(x=main_beer_drug_and_groc_1, y=beer_prod_attr_2011_edit, by=c("upc" = "upc"))
-
-main_beer_drug_and_groc_3 <- left_join(x=main_beer_drug_and_groc_2, y=prod11_beer, by=c("upc" = "UPC"))
-
-write_feather(main_beer_drug_and_groc_3, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_3_feather")
-
-main_beer_drug_and_groc_3 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_3_feather")
-################################################################################
-
-
-
-
-
-################################################################################
-# join Delivery_Stores to main_beer_drug_and_groc
-unique_Delivery_stores <- distinct(Delivery_Stores) # remove duplicate IRI_Key numbers
-
-main_beer_drug_and_groc_4 <- left_join(x=main_beer_drug_and_groc_3, y=unique_Delivery_stores, by="IRI_KEY")
-
-write_feather(main_beer_drug_and_groc_4, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
-
-main_beer_drug_and_groc_4 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
-################################################################################
+main_beer_drug_and_groc_4_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
 
 # Show all potiential market names
-mrkNames <- unique(main_beer_drug_and_groc_4$Market_Name)
+mrkNames <- unique(main_beer_drug_and_groc_4_2010$Market_Name)
 
 #write(mrkNames, file = "mrkNames", append = FALSE, sep = " ")
 
 market1 <- "LOS ANGELES"
 
-LA_data <- filter(main_beer_drug_and_groc_4, Market_Name==market1)
+LA_data <- filter(main_beer_drug_and_groc_4_2010, Market_Name==market1)
 
-rm(main_beer_drug_and_groc_4, mrkNames)
+rm(main_beer_drug_and_groc_4_2010, mrkNames)
 
-a <- LA_data[,c(1,2, 7:14, 19)]
+a <- LA_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
 
 
 

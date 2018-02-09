@@ -148,7 +148,9 @@ main_beer_drug_and_groc_3 <- read_feather("/Users/malooney/Google Drive/digitalL
 
 ################################################################################
 # join Delivery_Stores to main_beer_drug_and_groc
-main_beer_drug_and_groc_4 <- full_join(x=main_beer_drug_and_groc_3, y=Delivery_Stores, by="IRI_KEY")
+unique_Delivery_stores <- distinct(Delivery_Stores, IRI_KEY) # remove duplicate IRI_Key numbers
+
+main_beer_drug_and_groc_4 <- left_join(x=main_beer_drug_and_groc_3, y=unique_Delivery_stores, by="IRI_KEY")
 
 write_feather(main_beer_drug_and_groc_4, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
 

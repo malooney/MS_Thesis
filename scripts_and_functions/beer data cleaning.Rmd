@@ -168,7 +168,7 @@ LA_data <- filter(main_beer_drug_and_groc_4, Market_Name==market1)
 
 rm(main_beer_drug_and_groc_4, mrkNames)
 
-
+a <- LA_data[,c(1,2, 7:14, 19)]
 
 
 

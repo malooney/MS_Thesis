@@ -1,0 +1,69 @@
+---
+title: "Does Ethnicity Influence Beer Consumption and Brand Choice?"
+subtitle: ""
+author: "Matthew Aaron Looney"
+date: "February 14, 2018"
+
+output:
+  pdf_document:
+    fig_caption: yes
+    number_sections: yes
+    toc: no
+    toc_depth: 4
+  html_document:
+    toc: yes
+    toc_depth: '4'
+    
+abstract: "The beer industry in the US represents more than $350 billion dollars of total economic impact (2016). This makes the industry one of the largest consumer product sectors in America. As a category of consumer goods, beer is one of the most dynamically changing products in the country. The industry responds quickly to changes in consumer preference and shifting consumer demographics. The continued ability to understand and predict shifting consumer demand is paramount to the industries' ability to continue to innovate and selectively appeal to the heterogeneous consumer. It is well known that consumer demographics play a key role in determining consumer preference. Lopez and Matschke (2012) examine consumer preference for beer, in characteristic space, using market level data. The authors assume a heterogeneous agent model with age and income variation across consumers. Consistent with expectations, they find a strong relationship between increased age and income and lower sensitivity to price. However, the study omits other relevant consumer demographic variables, such as ethnicity. This study seeks to understand more deeply how additional consumer characteristics influence preference for beer; and in particular, how ethnicity influences beer consumption and brand choice. The methodological approach taken in this study is to estimate a differentiated demand for beer using a random coefficients discrete choice model. IRI Brand level data will be used as well as consumer level demographic data from the Current Population Survey.
+"
+    
+header-includes:
+- \usepackage{graphicx}
+- \usepackage{rotating}
+- \usepackage{longtable}
+- \usepackage{amssymb,amsmath}
+- \usepackage{dcolumn}
+- \usepackage{setspace}\doublespacing
+- \usepackage{mathrsfs}
+- \usepackage{eso-pic,graphicx,transparent}
+
+bibliography: differentiated_Beer_Demand.bib
+csl: computational-economics.csl
+link-citations: true
+fontsize: 12pt
+geometry: margin = 1.0in
+---
+
+\AddToShipoutPictureFG{
+  \AtPageCenter{% or \AtTextCenter
+    \makebox[0pt]{\rotatebox[origin=c]{45}{%
+      \scalebox{5}{\texttransparent{0.05}{DRAFT}}%
+    }}
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

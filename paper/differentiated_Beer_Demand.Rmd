@@ -2,7 +2,7 @@
 title: "Does Ethnicity Influence Beer Consumption and Brand Choice?"
 subtitle: ""
 author: "Matthew Aaron Looney"
-date: "February 14, 2018"
+date: "February 15, 2018"
 
 output:
   pdf_document:
@@ -31,7 +31,7 @@ bibliography: differentiated_Beer_Demand.bib
 csl: computational-economics.csl
 link-citations: true
 fontsize: 12pt
-geometry: margin = 1.0in
+geometry: margin = 1.25in
 ---
 
 \AddToShipoutPictureFG{
@@ -44,13 +44,35 @@ geometry: margin = 1.0in
 
 # Introduction
 
-Accroding to a study by the Pew Research Center (2016), by the year 2055 the United States will not have a single racial or ethnic majority. In 1965, 84% of Americans were non-Hispanic Whites, 11% Black, 4% Hispanic, less than 1% Asian and less than 1% other. By 2015 the ethnic distribution had shifted with non-Hispanic whites now representing 62% of the U.S. population, 12% Black, 18% Hispanic, 6% Asian and 2% other [^1]. Over a 50 year period the American demographic landscape had changed with large increases in Hispanic and Asian representation. These divergent trends are expected to continue long into the future at variable rates depending on how imigration policy morphs with fluctuations in the political landscape. 
+According to a study by the Pew Research Center (2016), by the year 2055 the United States will not have a single racial or ethnic majority. In 1965, 84% of Americans were non-Hispanic Whites, 11% Black, 4% Hispanic, less than 1% Asian and less than 1% other. By 2015 the ethnic distribution had shifted with non-Hispanic whites now representing 62% of the U.S. population, 12% Black, 18% Hispanic, 6% Asian and 2% other [^1]. Over a 50 year period the American demographic landscape had changed with large increases in Hispanic and Asian representation. These divergent trends are expected to continue long into the future at variable rates depending on how immigration policy morphs with fluctuations in the political landscape. 
 
-When discussing racial and ehtnic trends it has become important to define these terms precisly. Unfortunatly this is not a trivial task. The classical definitions of race and ethnicity used by sociologists and antrapologist are given by the following:
+When discussing racial and ethnic trends it has become important to define these terms precisely. Unfortunately this is not a trivial task. The classic definitions of race and ethnicity used by sociologists and anthropologist are given by the following:
 
   * Race - refers to a category of people who share certain inherited physical characteristics, such as skin color, facial features, and stature. Using physical differences as their criteria, scientists at one point identified as many as nine races: African, American Indian or Native American, Asian, Australian Aborigine, European (more commonly called “white”), Indian, Melanesian, Micronesian, and Polynesian. [@Smedley:1998wf]
   
-  * Ethnicity - refers to the shared social, cultural, and historical experiences, stemming from common national or regional backgrounds, that make subgroups of a population different from one another. Within the context of ethnicity, an ethnic group can be defined as a subgroup of a population with a set of shared social, cultural, and historical experiences; with relatively distinctive beliefs, values, and behaviors; and with some sense of identity of belonging to the subgroup. [@Barkan:2016wf]
+  * Ethnicity - refers to the shared social, cultural, and historical experiences, stemming from common national or regional backgrounds, that make subgroups of a population different from one another. Within the context of ethnicity, an ethnic group can be defined as a subgroup of a population with a set of shared social, cultural, and historical experiences; with relatively distinctive beliefs, values, and behaviors; and with some sense of identity of belonging to the subgroup. [@Barkan:2016wf]  
+  
+There has been much debate and disagreement within the social science community when dealing with issues of race and ethnicity. However, the current general consensus is that biological definitions of race are antiquated and largely irrelevant. Issues of biological classification based on genetic profiling have muddied the waters even further. With the current level of genetic diversity present in the world today it is not possible to classify an individual as purely one race over another. The idea of race as a biological classifier has dissolved and the idea of ethnic identity has emerged as the preferred method of individual demographic identifier.  
+  
+Given the complexity of the problems related to using biological race as a demographic identifier we will instead use the concept of ethnicity as defined above. An increasing number of data sets are including questions about ethnicity. This self reporting of ethnic identity is fundamentally inline with the widely accepted definitions of ethnicity and thus we feel it more appropriate to use ethnic demographic information over race.
+
+Given the changing ethnic landscape of the United States, consumer food preference last generation is looking very different from consumer food preference in the current generation. In fact, at the current pace of ethnic change, shifts in inter-generational food preference are becoming a reality that the U.S. food industry will needs to manage to appeal to the heterogeneous consumer.
+
+One of the largest consumer product sectors in America is the beer industry. As a whole, the beer industry in the US represents more than $350 billion dollars of total economic impact (2016). As a category of consumer goods, beer is one of the most dynamically changing products in the country. The industry responds quickly to changes in consumer preference and shifting consumer demographics.  
+  
+?????? Include information about the beer industries ability to shift focus quickly to appeal to changes in age demographics, ie. Millennials, with the development of the craft beer industry; reference PhD thesis work by Toro and subsequent work that stemmed from his thesis. ????? 
+  
+The ability of the beer industry to change quickly to appeal to a new consumer group makes the industry an interesting candidate to study with regard to changing ethnic diversity.  
+  
+????? need to get more clear about how to use a counter-factual to demonstrate and disentangle the demand shift. Is it beer industry responding to changing ethnic diversity that is causing ethnic groups to change their choice preference (marketing targeted to ethnic groups) or is it changing ethnic diversity that is causing the beer industry to change their products to meet a changing demographic variable. Or does it matter This does not need to be in the introduction but needs to be addressed at some point, maybe?????  
+  
+It is well known that consumer demographics play a key role in determining consumer preference. Lopez and Matschke (2012) examine consumer preference for beer, in characteristic space, using market level data. The authors assume a heterogeneous agent model with age and income variation across consumers. Consistent with expectations, they find a strong relationship between increased age and income and lower sensitivity to price. However, the study omits other relevant consumer demographic variables, such as ethnicity. This study seeks to understand more deeply how additional consumer characteristics influence preference for beer; and in particular, how ethnicity influences beer consumption and brand choice. 
+  
+The methodological approach taken in this study is to estimate a differentiated demand for beer using a random coefficients discrete choice model. IRI Brand level data will be used as well as consumer level demographic data from the Current Population Survey.  
+  
+????? Expand the methodology used with some generic formulation of BLP theory; just enough to give the reader an idea of how I am going to preform the study and what information will be obtained, ie elasticities, etc. Will save the in depth formulation for the theory section. Also need to explain the market and brand choice definitions quickly. Again I will save the in depth descriptions for the data and methodology sections?????
+
+
 
 
 

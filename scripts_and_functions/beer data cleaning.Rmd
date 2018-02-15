@@ -164,9 +164,9 @@ library(stringr)
 
 LA_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/LA_data_2010_feather")
 
-plot(table(LA_data_2010$IMPORTED_VS_DOMESTIC))
+#plot(table(LA_data_2010$IMPORTED_VS_DOMESTIC))
 
-hist(LA_data_2010$WEEK)
+#hist(LA_data_2010$WEEK)
 ```
 
 ```{r Chicago Market Data, cache=TRUE, include=TRUE, message=FALSE, warning=FALSE, echo=FALSE}
@@ -190,9 +190,9 @@ hist(LA_data_2010$WEEK)
 
 CHICAGO_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/CHICAGO_data_2010_feather")
 
-plot(table(CHICAGO_data_2010$IMPORTED_VS_DOMESTIC))
+#plot(table(CHICAGO_data_2010$IMPORTED_VS_DOMESTIC))
 
-hist(CHICAGO_data_2010$WEEK)
+#hist(CHICAGO_data_2010$WEEK)
 
 
 ```
@@ -218,9 +218,9 @@ hist(CHICAGO_data_2010$WEEK)
 
 DALLAS_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/DALLAS_data_2010_feather")
 
-plot(table(DALLAS_data_2010$IMPORTED_VS_DOMESTIC))
+#plot(table(DALLAS_data_2010$IMPORTED_VS_DOMESTIC))
 
-hist(DALLAS_data_2010$WEEK)
+#hist(DALLAS_data_2010$WEEK)
 
 
 ```

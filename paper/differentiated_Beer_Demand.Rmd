@@ -44,7 +44,13 @@ geometry: margin = 1.0in
 
 # Introduction
 
-Accroding to a Pew Research Center study (2016), by 2055 the United States will not have a single racial or ethnic majority. In 1965, 84% of Americans were non-hispanic whites, 11% black, 4% hispanic 
+Accroding to a study by the Pew Research Center (2016), by the year 2055 the United States will not have a single racial or ethnic majority. In 1965, 84% of Americans were non-Hispanic Whites, 11% Black, 4% Hispanic, less than 1% Asian and less than 1% other. By 2015 the ethnic distribution had shifted with non-Hispanic whites now representing 62% of the U.S. population, 12% Black, 18% Hispanic, 6% Asian and 2% other [^1]. Over a 50 year period the American demographic landscape had changed with large increases in Hispanic and Asian representation. These divergent trends are expected to continue long into the future at variable rates depending on how imigration policy morphs with fluctuations in the political landscape. 
+
+When discussing racial and ehtnic trends it has become important to define these terms precisly. Unfortunatly this is not a trivial task. The classical definitions of race and ethnicity used by sociologists and antrapologist are given by the following:
+
+  * Race - refers to a category of people who share certain inherited physical characteristics, such as skin color, facial features, and stature. Using physical differences as their criteria, scientists at one point identified as many as nine races: African, American Indian or Native American, Asian, Australian Aborigine, European (more commonly called “white”), Indian, Melanesian, Micronesian, and Polynesian. [@Smedley:1998wf]
+  
+  * Ethnicity - refers to the shared social, cultural, and historical experiences, stemming from common national or regional backgrounds, that make subgroups of a population different from one another. Within the context of ethnicity, an ethnic group can be defined as a subgroup of a population with a set of shared social, cultural, and historical experiences; with relatively distinctive beliefs, values, and behaviors; and with some sense of identity of belonging to the subgroup. [@Barkan:2016wf]
 
 
 
@@ -65,6 +71,9 @@ Accroding to a Pew Research Center study (2016), by 2055 the United States will 
 
 
 
+[^1]: Whites, Blacks and Asians include only single-race non-Hispanics. Asians include Pacific Islanders. Hispanics are of any race. Source: Pew research Center estimates based on adjusted census data.
 
+\newpage
 
+# References
 

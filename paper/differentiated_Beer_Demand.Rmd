@@ -67,19 +67,48 @@ geometry: margin = 1.25in
 ## Literature Review  
   
   
-\qquad The theoretical framework for projecting consumer choice onto a set of product characteristics originated with work by Kelvin Lancaster [-@Lancaster:1966tp]. This idea was extended further and the econometric model was developed by Daniel McFadden [-@mcfadden1973conditional]. This projection allowed for the estimation of a large number of products using a finite number of characteristics. Prior to this line of research the problem of dimensionality plagued empirical industrial organization and rendered many interesting problems intractable.
+\qquad The theoretical framework for projecting consumer choice onto a set of product characteristics originated with work by Kelvin Lancaster [-@Lancaster:1966tp]. This idea was extended further by Daniel McFadden who developed the econometric model [-@mcfadden1973conditional]. This projection allowed for the estimation of a large number of products using a finite number of characteristics. Prior to this line of research the problem of dimensionality plagued empirical industrial organization and rendered many interesting problems intractable.  
   
   
-\qquad While dimensionality was a large problem to overcome, price endogeneity is present is almost all supply and demand models and discrete choice modeling is no exception. If we fail to account for this endogeneity then our parameter estimates will be biased and inconsistent. Berry's 1994 Rand paper provides a method to overcome the endogeneity issue [-@Berry:1994tp]. He provides a method to estimate differentiated demand models in the presence of unobserved product characteristics by inverting the market share equation to obtain an estimate of mean utility. Once the implied mean utility is obtained the estimation can proceed in a similar way as homogeneous goods modeling. While Berry's method allows for the handling of endogenous prices through the use of standard linear instrumental variables his method does not address the well known problem of independence of irrelevant alternatives (iia).  
+\qquad While dimensionality was a large problem to overcome, price endogeneity is present in almost all supply and demand models and discrete choice modeling is no exception. If we fail to account for this endogeneity then our parameter estimates will be biased and depending on the exact model specification, inconsistent. Steven Berry's 1994 Rand paper provides an elegant method to overcome the endogeneity issue [-@Berry:1994tp]. He developed a method to estimate differentiated demand models in the presence of unobserved product characteristics by inverting the market share equation to obtain an estimate of mean utility. Once the implied mean utility is obtained the estimation can proceed in a similar way as homogeneous goods modeling. While Berry's method allows for the handling of endogenous prices through the use of standard linear instrumental variables his method does not address the well known problem of independence of irrelevant alternatives (iia) thereby severely restricting the cross-price elasticity patterns.^[For detailed discussions see Domencich and McFadden (1975), Hausman and Wise (1978), [@Berry:1995ud], [@Nevo:2000vk]]  
   
   
-\qquad The incorporation of consumer heterogeneity in discrete choice modeling of differentiated products explicitly address the iia issue. In a 1995 Econometrica paper by Steven Berry, James Levinsohn and Ariel Pakes (BLP) [-@Berry:1995ud] it was shown that individual consumer heterogeneity can be applied to a discrete choice model of differentiated goods in a tractable way to uncover consistent estimations of demand elasticities. The BLP model developed a way to break the iia property which allowed for more realistic substitution patterns across products. The BLP model has become a popular model in industrial organization and has become the model of choice when investigating merger simulations.  
+\qquad The incorporation of consumer heterogeneity in discrete choice modeling of differentiated products explicitly solves the iia problem. In a 1995 Econometrica paper by Steven Berry, James Levinsohn and Ariel Pakes (BLP) [-@Berry:1995ud] it was shown that individual consumer heterogeneity can be applied to a discrete choice model of differentiated goods in a tractable way to uncover consistent estimations of demand elasticities. The BLP model developed a way to break the iia property which allowed for more realistic substitution patterns across products. The BLP model has become a popular model in industrial organization and has become the model of choice when investigating merger simulations.  
   
   
-\qquad It is well known that consumer demographics play a key role in determining consumer preference. A search of the literature related to discrete choice modeling of differentiated goods reveal few studies that incorporate other demographic variables beyond income and age. A study by Lopez and Matschke [-@Lopez:2012ei] examine consumer preference for beer using market level data. The authors assume a heterogeneous agent model with age and income variation across consumers. Consistent with expectations, they find a strong relationship between increased age and income and lower sensitivity to price. However, the authors omit other relevant consumer demographic variables, such as ethnicity. One of the few studies to incorporate an ethnic variable in a random coefficients discrete choice model was performed by Charles Romeo [@Romeo:2016wx]. His results show that as the percentage of Hispanics in the population increase, the utility gained from consuming Corona decrease and turn negative with 18 to 22 percent Hispanics. Romeo can not offer any clear explanation of these results but suggests that perhaps with increasing percentages of Hispanics in the market, competition from other Latin American beers are moving consumers away from Corona. 
+\qquad It is well known that consumer demographics play a key role in determining consumer preference. A search of the literature related to discrete choice modeling of differentiated goods reveal few studies that incorporate other demographic variables beyond income and age. A study by Lopez and Matschke [-@Lopez:2012ei] use a random coefficients multinomial logit model to examine consumer preference for beer using market level data. The authors assume a heterogeneous agent model with age and income variation across consumers. Consistent with expectations, they find a strong relationship between increased age and income and lower sensitivity to price. However, the authors omit other relevant consumer demographic variables, such as ethnicity. One of the few studies to incorporate an ethnic variable in a random coefficients discrete choice model was performed by Charles Romeo [@Romeo:2016wx]. His results show that as the percentage of Hispanics in the population increase, the utility gained from consuming Corona decrease and turn negative with 18 to 22 percent Hispanics. Romeo can not offer any clear explanation of these results but suggests that perhaps with increasing percentages of Hispanics in the market, competition from other Latin American beers are moving consumers away from Corona. 
   
   
-## Conceptual Framework
+## Conceptual Framework  
+  
+  
+The demand system is obtained by assuming an individual will maximize their utility by selecting a product from the choice set. The conditional indirect utility of individual $i$ selecting product $j$ in market $t$ is given by $U(x_{jt}, \xi_{jt}, p_{jt}, \zeta_{i}|\theta )$, where $x_{jt}$ is a K-dimensional (row) vector of observable product charachteristics, $\xi_{jt}$ is the unobserved (by the researcher) product characteristic, $p_{jt}$ is the price of product $j$ in market $t$, $\zeta{i}$ are individual characteristics, and $\theta$ is a set of unknown paramters to be estimated.
+
+Then indirect utility is given by the following:
+
+\begin{equation}
+{u_{ijt}} = {\alpha _i}f( \cdot ) + {\beta _i}{x_{jt}} + {\xi _{jt}} + {\varepsilon _{ijt}}
+\end{equation}
+
+where, $i=1,...,I_t$, $j=1,...,J$, $t=1,...,T$, $f(p_{jt}, ...)$ is a functional form for indirect utility^[Depending on the research question the functional form can take on any one of a number of utility functions. For example, if wealth effects are thought to be important then a cobb-douglas functional may be appropriate, if not then quasi-linear may be choosen, see [@Petrin:2002ww]], $\alpha_i$ is individual $i$'s marginal utility gained from the paramaters of the utility function, $\beta_i$ is a K-dimensional (column) vector of individual-specific taste coefficients, and $\varepsilon_{ijt}$ is a mean zero stocastic error term.
+
+The introduction of consumer heterogeneity is done through modeling individual taste preference ($\alpha_i, \beta_i$) based on consumer characteristics, $\zeta_i$. This can be done by 
+
+
+
+
+
+Following exposition by Nevo we get the following:
+
+\begin{equation}
+\left( {\begin{array}{*{20}{c}}
+  {{\alpha _i}} \\ 
+  {{\beta _i}} 
+\end{array}} \right) = \left( {\begin{array}{*{20}{c}}
+  \alpha  \\ 
+  \beta  
+\end{array}} \right) + \Pi {D_i} + \Sigma {v_i},{\text{     }}{v_i} \sim P_v^*(v),{\text{    }}{{\text{D}}_i} \sim \hat P_D^*(D)
+\end{equation}
 
 
 

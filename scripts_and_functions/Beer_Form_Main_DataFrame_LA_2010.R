@@ -165,9 +165,14 @@ summary(lm.results <- lm( log(share)- log(outshr)~ 0 + price2+
                           data= LA_2010_aggregate_data))
 
 
-summary(lm.results1 <- lm( log(share) - log(outshr) ~ 0 + price2+ ABV+ IBU+ 
-                             Calories_oz+ Carbs_oz+ USA+ Mexico,
-                  data= LA_2010_aggregate_data))
+summary(lm.results1 <- lm( log(share) - log(outshr) ~ 0 + price2+ 
+                             ABV+ 
+                             IBU+ 
+                             Calories_oz+ 
+                             Carbs_oz+ 
+                             USA+ 
+                             Mexico, 
+                           data= LA_2010_aggregate_data))
 
 
 

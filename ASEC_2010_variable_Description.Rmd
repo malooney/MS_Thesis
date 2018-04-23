@@ -1,0 +1,131 @@
+---
+title: "Current Population Survey, 2010 Annual Social and Economic (ASEC) Supplement"
+author: "Matthew Aaron Looney"
+date: "4/13/2018"
+output:
+  html_document: default
+  pdf_document: default
+subtitle: Used Variable Description
+---
+
+[Census Reporter - Los Angeles, CA](https://censusreporter.org/profiles/16000US0644000-los-angeles-ca/)
+
+### HOUSEHOLD RECORD  
+  
+  
+* H-YEAR (h_year) (0:2999)  - Year of survey  
+  
+  
+* GTCBSA (gtcbsa) (00000:79600) - Metropolitan CBSA FIPS CODE  
+    + [See Appendix E, List 1](file:///Users/malooney/Desktop/CPS_March_Codebook_2010.pdf#page=294)  
+
+  
+  
+* FH-SEQ (h_seq) (00001:99999) - Household sequence number  
+  
+  
+### Family Record
+  
+* FFPOS (ffpos) (01:39) - Unique family identifier. This field plus FH-SEQ results in a unique family number for the file.  
+  
+  
+* FPERSONS (fpersons) (01:39) - Number of persons in family. Primary families include related subfamily members.  
+  
+  
+* FTOTVAL (ftotval) (-389961:23399766) - Total family income  
+    + All families  
+      00000000 None or not in universe  
+      Neg Amt Income (loss)  
+      Pos Amt Income  
+  
+  
+### Person Record  
+  
+  
+* A-AGE (a_age) (00:85) - Individual age.  
+  
+  
+* A-HGA (a_hga) (00:46) - Educational attainment  
+    + 00 children  
+      31 less than 1st grade  
+      32 1st, 2nd, 3rd, or 4th grade  
+      33 5th or 6th grade  
+      34 7th and 8th grade  
+      35 9th grade  
+      36 10th grade  
+      37 11th grade  
+      38 12th grade no diploma  
+      39 High school graduate -high school diploma or equivalent  
+      40 Some college but no degree  
+      41 Associate degree in college, occupation/vocation program  
+      42 Associate degree in college, academic program  
+      43 Bachelor's degree (for example: BA, AB, BS)  
+      44 Master's degree (for example: MA, MS, MENG, MED, MSW, MBA)  
+      45 Professional school degree (for example: MD, DDS, DVM, LLB, JD)  
+      46 Doctorate degree (for example: PHD, EDD)  
+  
+  
+* PRDTRACE (prdtrace) (01:21) - Race  
+    + All  
+      01 .White only  
+      02 Black only  
+      03 American Indian, Alaskan Native only (AI)  
+      04 Asian only  
+      05 Hawaiian/Pacific Islander only (HP)  
+      06 White-Black  
+      07 White-AI  
+      08 White-Asian  
+      09 White-HP  
+      10 Black-AI  
+      11 Black-Asian  
+      12 Black-HP  
+      13 AI-Asian  
+      14 Asian-HP  
+      15 White-Black-AI  
+      16 White-Black-Asian  
+      17 White-AI-Asian  
+      18 White-Asian-HP  
+      19 White-Black-AI-Asian  
+      20 2 or 3 races  
+      21 4 or 5 races  
+  
+  
+* PEHSPNON (pehspnon) (1:2) - Are you Spanish, Hispanic, or Latino?  
+    + All  
+      1 yes  
+      2 no  
+  
+  
+* PRDTHSP (prdthsp) (1:5) - Detailed Hispanic recode.  
+    + PEHSPNON = 1  
+      0 Not in universe  
+      1 Mexican  
+      2 Puerto Rican  
+      3 Cuban  
+      4 Central/South American  
+      5 Other Spanish  
+  
+  
+* PENATVTY (penatvty) (057:555) - In what country were you born?  
+    + [See Appendix H](file:///Users/malooney/Desktop/CPS_March_Codebook_2010.pdf#page=353)  
+  
+  
+* PEMNTVTY (pemntvty) (057:555) - In what country was your mother born?  
+    + [See Appendix H](file:///Users/malooney/Desktop/CPS_March_Codebook_2010.pdf#page=353)  
+  
+  
+* PEFNTVTY (pefntvty) (057:555) - In what country was your father born?  
+    + [See Appendix H](file:///Users/malooney/Desktop/CPS_March_Codebook_2010.pdf#page=353)  
+
+
+
+
+
+
+
+
+
+
+
+
+

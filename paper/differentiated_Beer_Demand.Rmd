@@ -44,7 +44,6 @@ geometry: margin = 1.25in
 <!-- } -->
 
 \newpage
-
 # Introduction
 
 \doublespacing
@@ -64,6 +63,7 @@ geometry: margin = 1.25in
 \qquad One of the largest consumer product sectors in America is the beer industry. As a whole, this industry represents more than $350 billion dollars of total economic impact ^[Based on data from 2016 in a study by John Dunham & Associates.]. As a category of consumer goods, beer is one of the most dynamically changing products in the country. The industry responds quickly to changes in consumer preference and shifting consumer demographics. The ability of the beer industry to change quickly to appeal to a new consumer group makes the industry an interesting candidate to study with regard to changing ethnic diversity.  
   
   
+\newpage
 ## Literature Review  
   
   
@@ -79,6 +79,7 @@ geometry: margin = 1.25in
 \qquad It is well known that consumer demographics play a key role in determining consumer preference. A search of the literature related to discrete choice modeling of differentiated goods reveal few studies that incorporate other demographic variables beyond income and age. A study by Lopez and Matschke [-@Lopez:2012ei] use a random coefficients multinomial logit model to examine consumer preference for beer using market level data. The authors assume a heterogeneous agent model with age and income variation across consumers. Consistent with expectations, they find a strong relationship between increased age and income and lower sensitivity to price. However, the authors omit other relevant consumer demographic variables, such as ethnicity. One of the few studies to incorporate an ethnic variable in a random coefficients discrete choice model was performed by Charles Romeo [@Romeo:2016wx]. His results show that as the percentage of Hispanics in the population increase, the utility gained from consuming Corona decrease and turn negative with 18 to 22 percent Hispanics. Romeo can not offer any clear explanation of these results but suggests that perhaps with increasing percentages of Hispanics in the market, competition from other Latin American beers are moving consumers away from Corona. 
   
   
+\newpage
 ## Conceptual Framework  
   
   
@@ -126,16 +127,12 @@ where, $\delta_{jt}$ is the mean utility, and $\mu_{ijt}$ and $\varepsilon_{ijt}
 The model parameters ($\theta_1$ and $\theta_2$) can be estimated using Hansen's generalized method of moments estimation technique [@Hansen:1982ue] and following the procedures detailed in Berry, et. al. [-@Berry:1995ud] and Nevo [-@Nevo:2000vk].
   
   
-
-
-
-
-
-## Methodology
+\newpage
+## Methods and Procedures
   
   
-\qquad The methodological approach taken in this study is to estimate a differentiated demand for beer using a random coefficients discrete choice model. IRI Brand level data will be used as well as consumer level demographic data from the Current Population Survey.  
-  
+\qquad The methodological approach taken in this study is to estimate a differentiated demand for beer using the random coefficients multinomial logit model develoed by Berry, et. al. [-@Berry:1995ud] and extended by Nevo [-@Nevo:2001tr], Chidmi [-@Chidmi:2006ww], Chidmi and Lopez [-@Chidmi:2007vf], and Chidmi and Murova [-@Chidmi:2011tj]. The data required to consistently estimate the model outlined in the previous section consist of the following variables: market shares, prices, brand characteristics, and information on the distribution of consumer demographics. Unlike other papers that have studied differntiated product demand this paper will incorporate a more rich set of demographic variables to elucidate how ethinic charachteristics influence brand choice. In this paper a market is defined as beer sales during 2010 in Los Angeles, California over 52 weeks at the chain/brand level. The market level sales data are obtained from Information Resource Inc. (IRI) and consist of all dollar by volume sales for a brand of beer at a specific chain. Market shares are calculated by adding up the total gallons of beer sold, by brand, in a given market and dividing by the total potiential market size. The potientail market size is assumed to be the per capita consumption of beer in Los Angeles, California^[For example, the per capita consumtion of beer for consumers over the age of 21 in the state of California is given as 25.5 gallons, according to 2012 data by the Beer Insitute. The 2010 census estimates the population of individuals over the age of 21 in Los Angeles as 2.6 million. For weekly data, the total potiential market size is 1,297,558 gallons of beer for consumers over 21.].
+
 
 
 

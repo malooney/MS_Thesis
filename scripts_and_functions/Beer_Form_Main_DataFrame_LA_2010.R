@@ -8,10 +8,9 @@ library(feather)
 
 # Load Data -------------------------------------------------------------------
 LA_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/LA_data_2010_feather")
-
 Beer_Characteristics_Master_List <- read.csv("~/Desktop/Beer_Characteristics_Master_List.csv", stringsAsFactors=FALSE)
 
-
+# Add volume measures ---------------------------------------------------------
 oz <- round(data.frame(oz=LA_data_2010$VOL_EQ.x* 288))
 total_oz <- (oz* LA_data_2010$UNITS); 
 colnames(total_oz) <- "total_oz"
@@ -25,14 +24,19 @@ LA_data_2010_manip <- cbind(LA_data_2010, oz, total_oz, total_gal,
 
 rm(oz, total_gal, total_oz, dollarPerGal, LA_data_2010)
 
+# Remove zero data ------------------------------------------------------------
 LA_data_2010_manip <- filter(LA_data_2010_manip, L5 !="ALL BRAND")
-
 LA_data_2010_manip <- filter(LA_data_2010_manip, dollarPerGal !="Inf")
 
+
 uniqueBrands <- data.frame(table(LA_data_2010_manip$L5))
+uniqueBrands <- arrange(uniqueBrands, desc(Freq))
+100 * (sum(uniqueBrands[1:20,2]) / nrow(LA_data_2010_manip))
+
 uniqueChains <- data.frame(table(LA_data_2010_manip$MskdName))
 uniqueFirms <- data.frame(table(LA_data_2010_manip$L4))
 uniqueConglomerates <- data.frame(table(LA_data_2010_manip$L3))
+
 
 # Function - Generate Main Data Frame -----------------------------------------
 generate_data_frame <- function()  {
@@ -48,7 +52,8 @@ generate_data_frame <- function()  {
                "MILLER GENUINE DRAFT LIGHT 64", "STELLA ARTOIS LAGER", 
                "BLUE MOON BELGIAN WHITE ALE")
 
-  N <- 0.3846154*2646000 # LA market size, per capita cons/weekx
+  N <- (25.5/52)*2646000 # LA market size, per capita consumption / week
+  #N <- (25.5/52)*250000
   tmp <- filter(LA_data_2010_manip, L5 %in% unqBrands)
   tmp_main <- data.frame()
   #i <- 1
@@ -70,16 +75,17 @@ generate_data_frame <- function()  {
         W <- tmp3$dollarPerGal/w_dollar
         W_mean <- sum(W*tmp3$dollarPerGal)
     
-        tmp_main[n, 1] <- m
-        tmp_main[n, 2] <- i
-        tmp_main[n, 3] <- unqChain[k]
-        tmp_main[n, 4] <- tmp2$WEEK[1]
-        tmp_main[n, 5] <- as.character(tmp2$`Calendar week starting on`[1])
-        tmp_main[n, 6] <- as.character(tmp2$`Calendar week ending on`[1])
-        tmp_main[n, 7] <- unqBrands[j]
-        tmp_main[n, 8] <- mean(tmp3$dollarPerGal)
-        tmp_main[n, 9] <- sum(tmp3$total_gal)/N
-        tmp_main[n, 10] <- W_mean
+        tmp_main[n, 01] <- m
+        tmp_main[n, 02] <- i
+        tmp_main[n, 03] <- unqChain[k]
+        tmp_main[n, 04] <- tmp2$WEEK[1]
+        tmp_main[n, 05] <- as.character(tmp2$`Calendar week starting on`[1])
+        tmp_main[n, 06] <- as.character(tmp2$`Calendar week ending on`[1])
+        tmp_main[n, 07] <- unqBrands[j]
+        tmp_main[n, 08] <- mean(tmp3$dollarPerGal)
+        tmp_main[n, 09] <- sum(tmp3$total_gal)/N
+        tmp_main[n, 10] <- sum(tmp3$total_gal)
+        tmp_main[n, 11] <- W_mean
     
         n <- n+1
         j <- j+1}
@@ -87,15 +93,16 @@ generate_data_frame <- function()  {
         j <- 1
         for(j in seq_along(unqBrands)){
           tmp_main[n, 01] <- m
-          tmp_main[n, 2] <- i
-          tmp_main[n, 3] <- unqChain[k]
-          tmp_main[n, 4] <- unqWeek[i]
-          tmp_main[n, 5] <- NA
-          tmp_main[n, 6] <- NA
-          tmp_main[n, 7] <- unqBrands[j]
-          tmp_main[n, 8] <- NA
-          tmp_main[n, 9] <- NA
+          tmp_main[n, 02] <- i
+          tmp_main[n, 03] <- unqChain[k]
+          tmp_main[n, 04] <- unqWeek[i]
+          tmp_main[n, 05] <- NA
+          tmp_main[n, 06] <- NA
+          tmp_main[n, 07] <- unqBrands[j]
+          tmp_main[n, 08] <- NA
+          tmp_main[n, 09] <- NA
           tmp_main[n, 10] <- NA
+          tmp_main[n, 11] <- NA
           
           n <- n+1
           j <- j+1}
@@ -107,8 +114,8 @@ generate_data_frame <- function()  {
   }
   
   colnames(tmp_main) <- c("cdid", "sub_cdid", "Chain", "week", "week_start",
-                          "week_end", "Brand", "price1", "share", "price2")
-  
+                          "week_end", "Brand", "price1", "share", 
+                          "total_gallons", "price2")
   return(tmp_main)
   }
 

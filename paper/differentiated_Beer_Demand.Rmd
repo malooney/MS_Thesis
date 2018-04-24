@@ -141,30 +141,7 @@ The model parameters ($\theta_1$ and $\theta_2$) can be estimated using Hansen's
 
 
 
-
-
-
-
-
-
-
-
-
 \newpage
-
 \singlespace
-
-# Notes:
-## Not included in paper
-
-Include information about the beer industries ability to shift focus quickly to appeal to changes in age demographics, ie. Millennial, with the development of the craft beer industry; reference PhD thesis work by Toro and subsequent work that stemmed from his thesis.
-
-need to get more clear about how to use a counter-factual to demonstrate and disentangle the demand shift. Is it beer industry responding to changing ethnic diversity that is causing ethnic groups to change their choice preference (marketing targeted to ethnic groups) or is it changing ethnic diversity that is causing the beer industry to change their products to meet a changing demographic variable. Or does it matter This does not need to be in the introduction but needs to be addressed at some point, maybe
-
-Expand the methodology used with some generic formulation of BLP theory; just enough to give the reader an idea of how I am going to preform the study and what information will be obtained, ie elasticities, etc. Will save the in depth formulation for the theory section. Also need to explain the market and brand choice definitions quickly. Again I will save the in depth descriptions for the data and methodology sections
-
-
-\newpage
-
 # References
 

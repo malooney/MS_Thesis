@@ -5,7 +5,7 @@ date: "4/13/2018"
 output:
   html_document: default
   pdf_document: default
-subtitle: Used Variable Description
+subtitle: "Description of Variable used in the following paper: Does Ethnicity Influence Beer Consumption and Brand Choice?"
 ---
 
 [Census Reporter - Los Angeles, CA](https://censusreporter.org/profiles/16000US0644000-los-angeles-ca/)

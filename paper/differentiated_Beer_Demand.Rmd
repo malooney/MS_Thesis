@@ -128,12 +128,30 @@ The model parameters ($\theta_1$ and $\theta_2$) can be estimated using Hansen's
   
   
 \newpage
-## Methods and Procedures
+## Data, Methods and Procedures
   
   
-\qquad The methodological approach taken in this study is to estimate a differentiated demand for beer using the random coefficients multinomial logit model develoed by Berry, et. al. [-@Berry:1995ud] and extended by Nevo [-@Nevo:2001tr], Chidmi [-@Chidmi:2006ww], Chidmi and Lopez [-@Chidmi:2007vf], and Chidmi and Murova [-@Chidmi:2011tj]. The data required to consistently estimate the model outlined in the previous section consist of the following variables: market shares, prices, brand characteristics, and information on the distribution of consumer demographics. Unlike other papers that have studied differntiated product demand this paper will incorporate a more rich set of demographic variables to elucidate how ethinic charachteristics influence brand choice. In this paper a market is defined as beer sales during 2010 in Los Angeles, California over 52 weeks at the chain/brand level. The market level sales data are obtained from Information Resource Inc. (IRI) and consist of all dollar by volume sales for a brand of beer at a specific chain. Market shares are calculated by adding up the total gallons of beer sold, by brand, in a given market and dividing by the total potiential market size. The potientail market size is assumed to be the per capita consumption of beer in Los Angeles, California^[For example, the per capita consumtion of beer for consumers over the age of 21 in the state of California is given as 25.5 gallons, according to 2012 data by the Beer Insitute. The 2010 census estimates the population of individuals over the age of 21 in Los Angeles as 2.6 million. For weekly data, the total potiential market size is 1,297,558 gallons of beer for consumers over 21.].
+\qquad The methodological approach taken in this study is to estimate a differentiated demand for beer using the random coefficients multinomial logit model developed by Berry, et. al. [-@Berry:1995ud] and extended by Nevo [-@Nevo:2001tr], Chidmi [-@Chidmi:2006ww], Chidmi and Lopez [-@Chidmi:2007vf], and Chidmi and Murova [-@Chidmi:2011tj]. The data required to consistently estimate the model outlined in the previous section consist of the following variables: market shares, prices, brand characteristics, and information on the distribution of consumer demographics. Unlike other papers that have studied differentiated product demand this paper will incorporate a more rich set of demographic variables to elucidate how ethnic characteristics influence brand choice. In this paper a market is defined as beer sales during 2010 in Los Angeles, California over 52 weeks at the chain/brand level. The market level sales data are obtained from Information Resource Inc. (IRI) and consist of all dollar by volume sales for a brand of beer at a specific chain during a one week period. Market shares are calculated by adding up the total gallons of beer sold, by brand, in a given market and dividing by the total potential market size. The potential market size is assumed to be the per capita consumption of beer in Los Angeles, California.^[For example, the per capita consumption of beer for consumers over the age of 21 in the state of California is given as 25.5 gallons, according to 2012 data by the Beer Institute. The 2010 census estimates the population of individuals over the age of 21 in Los Angeles as 2.6 million. For weekly data, the total potential market size is 1,297,558 gallons of beer for consumers over 21.] The product characteristics used in this study are as follows: alcohol by volume (ABV), international bitterness units (IBU), a measure of beer color, referred to as the standard reference method (SRM), calories per once, and carbohydrates per once. Indicator variables are included for the brand country of origin^[Was the brewer located in the United States, Mexico, Germany, the Netherlands, etc.] and the style of beer.^[For example, Pale Lagers & Pilsners, German Style Bocks, India Pale Ale (IPA), Wheat Beer, etc.] Consumer demographics are obtained by pooling data from the 2009, 2010, and 2011 Current Population Survey, Annual Social and Economic (ASEC) Supplement.^[Very little variation in demographics occur over any three year period. The pooling of data allows me to obtain a larger sample of individuals to minimize the error propagation during the numerical integration step in the estimation phase.] The demographic variables used are total family income, individual age, individual educational attainment, and a series of survey questions that ask the following questions: Are you Spanish, Hispanic, or Latino?, if yes then from where^[The respondent has a choice of five countries/regions to chose from; Mexico, Puerto Rico, Cuba, Central/South America, or other Spanish.], In what country were you born?, In what country was your mother born?, and In what country was your father born? All demographic variables are taken at the individual level with the exception of total family income.^[I assume that families pool their resources and adult individuals have equal access to total family income] All demographic variables are for individuals over the age of 21, the age at which alcohol is legally purchased and consumed in the United States.  
+  
+  
+Price data and unobserved product characteristics will be correlated with econometric error term and cause problems with endogeneity. These problem can be overcome by specifying a set of instruments that are correlated with prices and the unobserved product characteristics but uncorrelated with the error terms. (need to define and describe the IV's used... not done yet...)  
+  
+  
+The estimation proceeds using GMM methods to form a population moment condition which is a product of the instrumental variables and a structural error term to form a nonlinear GMM estimator. Let $Z=[z_1,...z_m]$ be a set of instruments where $E[Z^\prime\cdot\omega(\theta^*)]=0$, and $\omega$ (the error term) is a function of the model parameters and $\theta^*$ denotes the true values of the model parameters. The GMM estimate is
 
+\begin{equation}
+\hat \theta  = \mathop {\arg \min }\limits_\theta  [\omega {(\theta )^\prime }Z{A^{ - 1}}{Z^\prime }\omega (\theta )]
+\end{equation}
 
+where, $A$ is a consistent estimate of $E[Z^\prime\omega\omega^\prime Z]$. Following the procedures detailed in Berry [-@Berry:1994tp], the unobserved product characteristics error term is given by $\xi_{j}+\Delta\xi_{jt}$. The unobserved product can then be computed as a function od the data and the parameters by solving for the mean utility levels, $\delta_{\cdot t}$, that solves the implicit equations,
+
+\begin{equation}
+{s_{ \cdot t}}(x,{p_{ \cdot t}},{\delta _{ \cdot t}}|{\theta _2}) = {S_{ \cdot t}}
+\end{equation}
+
+where, $s_{\cdot t}(\cdot)$ is the market share function defined by equation (define market share function in Conceptual Framework...), and $s_{\cdot t}$ are the observed market shares. The inversion can be done either numerically (for the full model) or by using the McFadden result for the logit model which gives, $\delta_{jt}(x,p_{\cdot t}, S_{\cdot t}|\theta_2)=ln(S_{jt})-ln(S_{0t})$. The error term is now defined as $\omega_{jt}=\delta_{jt}(x,p_{\cdot t}, S_{\cdot t}|\theta_2)-(x_j\beta+\alpha p_{jt})$. As Nevo [-@Nevo:2001tr] notes, the reason is now clear for separating out the $\theta_1$ and $\theta_2$ terms, $\theta_1$ enters the error term and the GMM objective function linearly while $\theta_2$ enters nonlinearly.
+
+The estimation algorithm computer code was developed by closely following the Matlab computer code developed by Nevo [-@Nevo:2000vk] and Chidmi and Murova [-@Chidmi:2011tj].
 
 
 
@@ -143,5 +161,6 @@ The model parameters ($\theta_1$ and $\theta_2$) can be estimated using Hansen's
 
 \newpage
 \singlespace
+
 # References
 

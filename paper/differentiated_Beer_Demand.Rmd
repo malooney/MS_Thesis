@@ -2,7 +2,7 @@
 title: "Does Ethnicity Influence Beer Consumption and Brand Choice?"
 subtitle: ""
 author: "Matthew Aaron Looney"
-date: "April 09, 2018"
+date: "May 08, 2018"
 
 output:
   pdf_document:

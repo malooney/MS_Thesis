@@ -12,10 +12,10 @@ Beer_Characteristics_Master_List <- read.csv("~/Desktop/Beer_Characteristics_Mas
 
 # Add volume measures ---------------------------------------------------------
 oz <- round(data.frame(oz=LA_data_2010$VOL_EQ.x* 288))
-total_oz <- (oz* LA_data_2010$UNITS); 
-colnames(total_oz) <- "total_oz"
-total_gal <- (0.0078125* total_oz); 
-colnames(total_gal) <- "total_gal"
+total_oz <- (oz* LA_data_2010$UNITS); colnames(total_oz) <- "total_oz"
+
+total_gal <- (0.0078125* total_oz); colnames(total_gal) <- "total_gal"
+
 dollarPerGal <- LA_data_2010$DOLLARS/ total_gal; 
 colnames(dollarPerGal) <- "dollarPerGal"
 
@@ -28,32 +28,64 @@ rm(oz, total_gal, total_oz, dollarPerGal, LA_data_2010)
 LA_data_2010_manip <- filter(LA_data_2010_manip, L5 !="ALL BRAND")
 LA_data_2010_manip <- filter(LA_data_2010_manip, dollarPerGal !="Inf")
 
+# Explore Brands, Firms, and percenatges of Brands by Firms -------------------
 
-uniqueBrands <- data.frame(table(LA_data_2010_manip$L5))
+uniqueBrands_all <- data.frame(Brand = rep(LA_data_2010_manip$L5, 
+                                       LA_data_2010_manip$UNITS), 
+                           y = sequence(LA_data_2010_manip$UNITS))
+uniqueBrands <- data.frame(table(uniqueBrands_all$Brand))
 uniqueBrands <- arrange(uniqueBrands, desc(Freq))
-100 * (sum(uniqueBrands[1:20,2]) / nrow(LA_data_2010_manip))
+prcntBrandRep <- (sum(uniqueBrands[1:20,2]) / nrow(uniqueBrands_all)) * 100
 
-uniqueChains <- data.frame(table(LA_data_2010_manip$MskdName))
-uniqueFirms <- data.frame(table(LA_data_2010_manip$L4))
+uniqueChains_all <- data.frame(Chain = rep(LA_data_2010_manip$MskdName, 
+                                           LA_data_2010_manip$UNITS), 
+                               y = sequence(LA_data_2010_manip$UNITS))
+uniqueChains <- data.frame(table(uniqueChains_all$Chain))
+uniqueChains <- arrange(uniqueChains, desc(Freq))
+prcntChainRep <- (sum(uniqueChains[1:4,2]) / nrow(uniqueChains_all)) * 100
+
+uniqueFirms_all <- data.frame(Firm = rep(LA_data_2010_manip$L4, 
+                                           LA_data_2010_manip$UNITS), 
+                               y = sequence(LA_data_2010_manip$UNITS))
+uniqueFirms <- data.frame(table(uniqueFirms_all$Firm))
+uniqueFirms <- arrange(uniqueFirms, desc(Freq))
+prcntFirmRep <- (sum(uniqueFirms[1:2,2]) / nrow(uniqueFirms_all)) * 100
+
 uniqueConglomerates <- data.frame(table(LA_data_2010_manip$L3))
+uniqueConglomerates <- arrange(uniqueConglomerates, desc(Freq))
 
+rm(uniqueBrands_all, uniqueChains_all, uniqueFirms_all)
 
 # Function - Generate Main Data Frame -----------------------------------------
+
 generate_data_frame <- function()  {
   
   unqWeek <- unique(LA_data_2010_manip$WEEK)
   unqChain <- unique(LA_data_2010_manip$MskdName)
   unqChain <- unqChain[-2] # remove Chain w/missing weeks
-  unqBrands <- c("BUD LIGHT", "BUDWEISER", "COORS LIGHT", "MILLER LITE",
-               "CORONA EXTRA", "HEINEKEN", "TECATE", "MILLER GENUINE DRAFT", 
-               "MILLER HIGH LIFE", "MODELO ESPECIAL", "BUD LIGHT LIME", 
-               "NEWCASTLE BROWN ALE", "MICHELOB ULTRA", "CORONA LIGHT",
-               "NATURAL LIGHT", "COORS", "PACIFICO CLARA", 
-               "MILLER GENUINE DRAFT LIGHT 64", "STELLA ARTOIS LAGER", 
-               "BLUE MOON BELGIAN WHITE ALE")
+  unqBrands <- c("BUD LIGHT", 
+                 "BUDWEISER", 
+                 "COORS LIGHT", 
+                 "MILLER LITE", 
+                 "CORONA EXTRA", 
+                 "HEINEKEN", 
+                 "TECATE", 
+                 "MILLER GENUINE DRAFT", 
+                 "MILLER HIGH LIFE", 
+                 "MODELO ESPECIAL", 
+                 "BUD LIGHT LIME", 
+                 "NEWCASTLE BROWN ALE", 
+                 "MICHELOB ULTRA", 
+                 "CORONA LIGHT", 
+                 "NATURAL LIGHT", 
+                 "COORS", 
+                 "PACIFICO CLARA", 
+                 "MILLER GENUINE DRAFT LIGHT 64", 
+                 "STELLA ARTOIS LAGER", 
+                 "BLUE MOON BELGIAN WHITE ALE")
 
-  N <- (25.5/52)*2646000 # LA market size, per capita consumption / week
-  #N <- (25.5/52)*250000
+  N <- (2646000/10)* (25.5/52) # LA market size Times per capita consumption / week
+  #N <- 250000* (25.5/52)
   tmp <- filter(LA_data_2010_manip, L5 %in% unqBrands)
   tmp_main <- data.frame()
   #i <- 1
@@ -69,26 +101,34 @@ generate_data_frame <- function()  {
       tmp2 <- filter(tmp1, WEEK==unqWeek[i])
       if(nrow(tmp2)!=0){
       j <- 1
-      for(j in seq_along(unqBrands)){ 
+      
+      for(j in seq_along(unqBrands)){
+        
         tmp3 <- filter(tmp2, L5==unqBrands[j]) 
         w_dollar <- sum(tmp3$dollarPerGal)
         W <- tmp3$dollarPerGal/w_dollar
         W_mean <- sum(W*tmp3$dollarPerGal)
     
-        tmp_main[n, 01] <- m
+        tmp_main[n, 01] <- m # cdid_week
         tmp_main[n, 02] <- i
-        tmp_main[n, 03] <- unqChain[k]
+        tmp_main[n, 03] <- unqChain[k] # chain
         tmp_main[n, 04] <- tmp2$WEEK[1]
         tmp_main[n, 05] <- as.character(tmp2$`Calendar week starting on`[1])
         tmp_main[n, 06] <- as.character(tmp2$`Calendar week ending on`[1])
-        tmp_main[n, 07] <- unqBrands[j]
-        tmp_main[n, 08] <- mean(tmp3$dollarPerGal)
-        tmp_main[n, 09] <- sum(tmp3$total_gal)/N
-        tmp_main[n, 10] <- sum(tmp3$total_gal)
-        tmp_main[n, 11] <- W_mean
-    
+        tmp_main[n, 07] <- unqBrands[j] # brand
+        tmp_main[n, 08] <- tmp3$L3[1] # Conglomerate
+        tmp_main[n, 09] <- tmp3$L4[1] # Firm
+        tmp_main[n, 10] <- mean(tmp3$dollarPerGal) # mean price1 ($/gal)
+        tmp_main[n, 11] <- W_mean # weighted mean price2 ($/gal)
+        tmp_main[n, 12] <- sum(tmp3$total_gal)/N # share
+        tmp_main[n, 13] <- sum(tmp3$total_gal) # total gallons
+        
+
+        
         n <- n+1
-        j <- j+1}
+        j <- j+1
+        }
+      
       } else{
         j <- 1
         for(j in seq_along(unqBrands)){
@@ -103,27 +143,34 @@ generate_data_frame <- function()  {
           tmp_main[n, 09] <- NA
           tmp_main[n, 10] <- NA
           tmp_main[n, 11] <- NA
+          tmp_main[n, 12] <- NA
+          tmp_main[n, 13] <- NA
           
           n <- n+1
-          j <- j+1}
-        }
+          j <- j+1
+          }
+      }
+      
       i <- i+1
       m <- m+1
       }
     k <- k+1
   }
   
-  colnames(tmp_main) <- c("cdid", "sub_cdid", "Chain", "week", "week_start",
-                          "week_end", "Brand", "price1", "share", 
-                          "total_gallons", "price2")
+  colnames(tmp_main) <- c("cdid", "sub_cdid", "Chain", "week", 
+                          "week_start", "week_end", "Brand", "Conglomerate",
+                          "Firm", "p1_mean_$/gal", "p2_Wmean_$/gal",
+                          "share", "total_gallons")
   return(tmp_main)
   }
 
 LA_2010_aggregate_data <- generate_data_frame()
 
-nmkt <- 364;
-nbrn <- 20;
-constant <- data.frame("constant"= rep(1, times=nmkt*nbrn))
+nChains <- 6
+nWeeks <- 52 # number of weeks
+nmkt <- nChains * nWeeks # number of markets
+nbrn <- 20 # number of brands
+constant <- data.frame("constant"= rep(1, times= nmkt* nbrn))
 
 outshr <- function(share, cdid, nmkt, nbrn){ # function to calculate outshr
   
@@ -138,7 +185,7 @@ outshr <- function(share, cdid, nmkt, nbrn){ # function to calculate outshr
 
 outshr <- data.frame(outshr= outshr(share=LA_2010_aggregate_data$share, cdid=LA_2010_aggregate_data$cdid, nmkt=nmkt, nbrn=nbrn))
 
-price3 <- data.frame(price3=LA_2010_aggregate_data$price2/10)
+price3 <- data.frame(price3= LA_2010_aggregate_data$`p2_Wmean_$/gal` / 100)
 
 LA_2010_aggregate_data <- cbind(LA_2010_aggregate_data, outshr, price3)
 
@@ -148,38 +195,87 @@ LA_2010_aggregate_data <- left_join(LA_2010_aggregate_data,
 
 rm(outshr, price3, constant)
 
-summary(lm.results <- lm( log(share)- log(outshr)~ 0 + price2+ 
-                            `BUD.LIGHT`+ 
-                            `BUDWEISER`+ 
-                            `COORS.LIGHT`+ 
-                            `MILLER.LITE`+ 
-                            `CORONA.EXTRA`+ 
-                            `HEINEKEN`+ 
-                            `TECATE`+ 
-                            `MILLER.GENUINE.DRAFT`+ 
-                            `MILLER.HIGH.LIFE`+ 
-                            `MODELO.ESPECIAL`+ 
-                            `BUD.LIGHT.LIME`+ 
-                            NEWCASTLE.BROWN.ALE+ 
-                            MICHELOB.ULTRA+ 
-                            CORONA.LIGHT+ 
-                            NATURAL.LIGHT+ 
-                            COORS+ 
-                            PACIFICO.CLARA+ 
-                            MILLER.GENUINE.DRAFT.LIGHT.64+ 
-                            STELLA.ARTOIS.LAGER+ 
+LA_2010_aggregate_data_subChain <- filter(LA_2010_aggregate_data, 
+                                          Chain == "Chain79")# | 
+                                          #Chain == "Chain110")# |
+                                          #Chain == "Chain3" |
+                                          #Chain == "Chain98")# | 
+                                          #Chain == "Chain15")#| 
+                                          #Chain == "Chain84")
+
+# LA_2010_aggregate_data_subChain$outshr[LA_2010_aggregate_data_subChain$outshr <
+#                                          0] <- 0.0000001
+
+# -----------------------------------------------------------------------------
+
+
+par(mfrow=c(3,2))
+
+hist(filter(LA_2010_aggregate_data, Chain=="Chain79")$price2, 
+     main="Prices of Chain79", xlim=c(0, 25))
+abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain79")$price2), 
+       col="blue")
+
+hist(filter(LA_2010_aggregate_data, Chain=="Chain110")$price2, 
+     main="Prices of Chain110", xlim=c(0, 25))
+abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain110")$price2), 
+       col="blue")
+
+hist(filter(LA_2010_aggregate_data, Chain=="Chain3")$price2, 
+     main="Prices of Chain3", xlim=c(0, 25))
+abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain3")$price2), 
+       col="blue")
+
+hist(filter(LA_2010_aggregate_data, Chain=="Chain98")$price2, 
+     main="Prices of Chain98", xlim=c(0, 25))
+abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain98")$price2), 
+       col="blue")
+
+hist(filter(LA_2010_aggregate_data, Chain=="Chain15")$price2,
+     main="Prices of Chain15", xlim=c(0, 25))
+abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain15")$price2),
+       col=
+         "blue")
+
+hist(filter(LA_2010_aggregate_data, Chain=="Chain84")$price2,
+     main="Prices of Chain84", xlim=c(0, 25))
+abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain84")$price2),
+       col="blue")
+
+summary(lm.results <- lm( log(share) - log(outshr)~  0 + `p2_Wmean_$/gal` + 
+                            BUD.LIGHT + 
+                            BUDWEISER + 
+                            COORS.LIGHT + 
+                            MILLER.LITE + 
+                            CORONA.EXTRA + 
+                            HEINEKEN + 
+                            TECATE + 
+                            MILLER.GENUINE.DRAFT + 
+                            MILLER.HIGH.LIFE + 
+                            MODELO.ESPECIAL + 
+                            BUD.LIGHT.LIME + 
+                            NEWCASTLE.BROWN.ALE + 
+                            MICHELOB.ULTRA + 
+                            CORONA.LIGHT + 
+                            NATURAL.LIGHT + 
+                            COORS + 
+                            PACIFICO.CLARA + 
+                            MILLER.GENUINE.DRAFT.LIGHT.64 + 
+                            STELLA.ARTOIS.LAGER + 
                             BLUE.MOON.BELGIAN.WHITE.ALE, 
-                          data= LA_2010_aggregate_data))
+                          data= LA_2010_aggregate_data_subChain))
 
 
-summary(lm.results1 <- lm( log(share) - log(outshr) ~ 0 + price2+ 
-                             ABV+ 
-                             IBU+ 
-                             Calories_oz+ 
-                             Carbs_oz+ 
-                             USA+ 
-                             Mexico, 
-                           data= LA_2010_aggregate_data))
+summary(lm.results1 <- lm( log(share) - log(outshr) ~ 1 + `p2_Wmean_$/gal` + 
+                             ABV + 
+                             #IBU + 
+                             #SRM +
+                             Calories_oz + 
+                             Carbs_oz + 
+                             USA + 
+                             Mexico# + 
+                             # Netherlands 
+                           ,data= LA_2010_aggregate_data_subChain))
 
 
 

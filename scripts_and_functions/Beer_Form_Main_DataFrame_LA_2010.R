@@ -5,6 +5,7 @@ cat("\014")
 
 library(dplyr)
 library(feather)
+library(stargazer)
 
 # Load Data -------------------------------------------------------------------
 LA_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/LA_data_2010_feather")
@@ -29,20 +30,42 @@ LA_data_2010_manip <- filter(LA_data_2010_manip, L5 !="ALL BRAND")
 LA_data_2010_manip <- filter(LA_data_2010_manip, dollarPerGal !="Inf")
 
 # Explore Brands, Firms, and percenatges of Brands by Firms -------------------
+uniqueBrands <- LA_data_2010_manip
+colnames(uniqueBrands)[20] <- "Brands"
+uniqueBrands_U <- aggregate(UNITS~Brands, uniqueBrands, sum)
+uniqueBrands_Dol <- aggregate(DOLLARS~Brands, uniqueBrands, sum)
+uniqueBrands_TotGal <- aggregate(total_gal~Brands, uniqueBrands, sum)
+uniqueBrands <- full_join(uniqueBrands_U, uniqueBrands_Dol, by="Brands")
+uniqueBrands <- full_join(uniqueBrands, uniqueBrands_TotGal, by="Brands")
+uniqueBrands <- arrange(uniqueBrands, desc(UNITS))
+rm(uniqueBrands_Dol, uniqueBrands_U, uniqueBrands_TotGal)
+prcntBrandRep <- (sum(uniqueBrands[1:20,2]) / sum(uniqueBrands$UNITS)) * 100
+par(mfrow=c(2,2))
+x <- uniqueBrands[order(uniqueBrands$UNITS[1:20]),]
+dotchart(x$UNITS[1:20], labels = x$Brands[1:20], 
+         cex=.7,
+         main="Total Units by Brand", 
+         xlab="Units")
+x <- uniqueBrands[order(uniqueBrands$DOLLARS[1:20]),]
+dotchart(x$DOLLARS[1:20], labels = x$Brands[1:20], 
+         cex=.7,
+         main="Total Dollars by Brand", 
+         xlab="Dollars")
+aggregateDataSummary <- data.frame(Units=uniqueBrands$UNITS[1:20], 
+                                   Dollars=uniqueBrands$DOLLARS[1:20], 
+                                   Total_Gallons=uniqueBrands$total_gal[1:20])
+rownames(aggregateDataSummary) <- uniqueBrands$Brands[1:20]
+write(stargazer(aggregateDataSummary, type = "text", summary = F, flip=F, header = F), file="data.test")
 
-uniqueBrands_all <- data.frame(Brand = rep(LA_data_2010_manip$L5, 
-                                       LA_data_2010_manip$UNITS), 
-                           y = sequence(LA_data_2010_manip$UNITS))
-uniqueBrands <- data.frame(table(uniqueBrands_all$Brand))
-uniqueBrands <- arrange(uniqueBrands, desc(Freq))
-prcntBrandRep <- (sum(uniqueBrands[1:20,2]) / nrow(uniqueBrands_all)) * 100
+
+
 
 uniqueChains_all <- data.frame(Chain = rep(LA_data_2010_manip$MskdName, 
                                            LA_data_2010_manip$UNITS), 
                                y = sequence(LA_data_2010_manip$UNITS))
 uniqueChains <- data.frame(table(uniqueChains_all$Chain))
 uniqueChains <- arrange(uniqueChains, desc(Freq))
-prcntChainRep <- (sum(uniqueChains[1:4,2]) / nrow(uniqueChains_all)) * 100
+prcntChainRep <- (sum(uniqueChains[1:1,2]) / nrow(uniqueChains_all)) * 100
 
 uniqueFirms_all <- data.frame(Firm = rep(LA_data_2010_manip$L4, 
                                            LA_data_2010_manip$UNITS), 
@@ -118,12 +141,10 @@ generate_data_frame <- function()  {
         tmp_main[n, 07] <- unqBrands[j] # brand
         tmp_main[n, 08] <- tmp3$L3[1] # Conglomerate
         tmp_main[n, 09] <- tmp3$L4[1] # Firm
-        tmp_main[n, 10] <- mean(tmp3$dollarPerGal) # mean price1 ($/gal)
-        tmp_main[n, 11] <- W_mean # weighted mean price2 ($/gal)
-        tmp_main[n, 12] <- sum(tmp3$total_gal)/N # share
-        tmp_main[n, 13] <- sum(tmp3$total_gal) # total gallons
-        
-
+        tmp_main[n, 10] <- sum(tmp3$total_gal) # total gallons
+        tmp_main[n, 11] <- mean(tmp3$dollarPerGal) # mean price1 ($/gal)
+        tmp_main[n, 12] <- W_mean # weighted mean price2 ($/gal)
+        tmp_main[n, 13] <- sum(tmp3$total_gal)/N # share
         
         n <- n+1
         j <- j+1
@@ -159,8 +180,8 @@ generate_data_frame <- function()  {
   
   colnames(tmp_main) <- c("cdid", "sub_cdid", "Chain", "week", 
                           "week_start", "week_end", "Brand", "Conglomerate",
-                          "Firm", "p1_mean_$/gal", "p2_Wmean_$/gal",
-                          "share", "total_gallons")
+                          "Firm",  "total_gallons", "p1_mean", "p2_Wmean",
+                          "share")
   return(tmp_main)
   }
 
@@ -185,20 +206,18 @@ outshr <- function(share, cdid, nmkt, nbrn){ # function to calculate outshr
 
 outshr <- data.frame(outshr= outshr(share=LA_2010_aggregate_data$share, cdid=LA_2010_aggregate_data$cdid, nmkt=nmkt, nbrn=nbrn))
 
-price3 <- data.frame(price3= LA_2010_aggregate_data$`p2_Wmean_$/gal` / 100)
-
-LA_2010_aggregate_data <- cbind(LA_2010_aggregate_data, outshr, price3)
+LA_2010_aggregate_data <- cbind(LA_2010_aggregate_data, outshr)
 
 LA_2010_aggregate_data <- left_join(LA_2010_aggregate_data, 
                                      Beer_Characteristics_Master_List, 
                                      by= c("Brand" = "Product_Name"))
 
-rm(outshr, price3, constant)
+rm(outshr, constant)
 
 LA_2010_aggregate_data_subChain <- filter(LA_2010_aggregate_data, 
                                           Chain == "Chain79")# | 
                                           #Chain == "Chain110")# |
-                                          #Chain == "Chain3" |
+                                          #Chain == "Chain3")# |
                                           #Chain == "Chain98")# | 
                                           #Chain == "Chain15")#| 
                                           #Chain == "Chain84")
@@ -211,38 +230,38 @@ LA_2010_aggregate_data_subChain <- filter(LA_2010_aggregate_data,
 
 par(mfrow=c(3,2))
 
-hist(filter(LA_2010_aggregate_data, Chain=="Chain79")$price2, 
+hist(filter(LA_2010_aggregate_data, Chain=="Chain79")$p2_Wmean,
      main="Prices of Chain79", xlim=c(0, 25))
-abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain79")$price2), 
+abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain79")$p2_Wmean),
        col="blue")
 
-hist(filter(LA_2010_aggregate_data, Chain=="Chain110")$price2, 
+hist(filter(LA_2010_aggregate_data, Chain=="Chain110")$p2_Wmean,
      main="Prices of Chain110", xlim=c(0, 25))
-abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain110")$price2), 
+abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain110")$p2_Wmean),
        col="blue")
 
-hist(filter(LA_2010_aggregate_data, Chain=="Chain3")$price2, 
+hist(filter(LA_2010_aggregate_data, Chain=="Chain3")$p2_Wmean,
      main="Prices of Chain3", xlim=c(0, 25))
-abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain3")$price2), 
+abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain3")$p2_Wmean),
        col="blue")
 
-hist(filter(LA_2010_aggregate_data, Chain=="Chain98")$price2, 
+hist(filter(LA_2010_aggregate_data, Chain=="Chain98")$p2_Wmean,
      main="Prices of Chain98", xlim=c(0, 25))
-abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain98")$price2), 
+abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain98")$p2_Wmean),
        col="blue")
 
-hist(filter(LA_2010_aggregate_data, Chain=="Chain15")$price2,
+hist(filter(LA_2010_aggregate_data, Chain=="Chain15")$p2_Wmean,
      main="Prices of Chain15", xlim=c(0, 25))
-abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain15")$price2),
+abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain15")$p2_Wmean),
        col=
          "blue")
 
-hist(filter(LA_2010_aggregate_data, Chain=="Chain84")$price2,
+hist(filter(LA_2010_aggregate_data, Chain=="Chain84")$p2_Wmean,
      main="Prices of Chain84", xlim=c(0, 25))
-abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain84")$price2),
+abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain84")$p2_Wmean),
        col="blue")
 
-summary(lm.results <- lm( log(share) - log(outshr)~  0 + `p2_Wmean_$/gal` + 
+summary(lm.results <- lm( log(share) - log(outshr)~  0 + p2_Wmean + 
                             BUD.LIGHT + 
                             BUDWEISER + 
                             COORS.LIGHT + 
@@ -266,7 +285,7 @@ summary(lm.results <- lm( log(share) - log(outshr)~  0 + `p2_Wmean_$/gal` +
                           data= LA_2010_aggregate_data_subChain))
 
 
-summary(lm.results1 <- lm( log(share) - log(outshr) ~ 1 + `p2_Wmean_$/gal` + 
+summary(lm.results1 <- lm( log(share) - log(outshr) ~ 1 + p2_Wmean + 
                              ABV + 
                              #IBU + 
                              #SRM +

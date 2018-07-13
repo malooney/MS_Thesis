@@ -55,7 +55,8 @@ aggregateDataSummary <- data.frame(Units=uniqueBrands$UNITS[1:20],
                                    Dollars=uniqueBrands$DOLLARS[1:20], 
                                    Total_Gallons=uniqueBrands$total_gal[1:20])
 rownames(aggregateDataSummary) <- uniqueBrands$Brands[1:20]
-write(stargazer(aggregateDataSummary, type = "text", summary = F, flip=F, header = F), file="data.test")
+write(stargazer(aggregateDataSummary, type = "text", summary = F, flip=F, header = F), file="LA_agg_data.txt")
+rm(x)
 
 
 

@@ -39,23 +39,24 @@ uniqueBrands <- full_join(uniqueBrands_U, uniqueBrands_Dol, by="Brands")
 uniqueBrands <- full_join(uniqueBrands, uniqueBrands_TotGal, by="Brands")
 uniqueBrands <- arrange(uniqueBrands, desc(UNITS))
 rm(uniqueBrands_Dol, uniqueBrands_U, uniqueBrands_TotGal)
-prcntBrandRep <- (sum(uniqueBrands[1:20,2]) / sum(uniqueBrands$UNITS)) * 100
-par(mfrow=c(2,2))
-x <- uniqueBrands[order(uniqueBrands$UNITS[1:20]),]
-dotchart(x$UNITS[1:20], labels = x$Brands[1:20], 
+prcntBrandRep <- (sum(uniqueBrands[1:60,2]) / sum(uniqueBrands$UNITS)) * 100
+par(mfrow=c(1,2))
+x <- uniqueBrands[order(uniqueBrands$UNITS[1:60]),]
+dotchart(x$UNITS[1:60], labels = x$Brands[1:60], 
          cex=.7,
          main="Total Units by Brand", 
          xlab="Units")
-x <- uniqueBrands[order(uniqueBrands$DOLLARS[1:20]),]
-dotchart(x$DOLLARS[1:20], labels = x$Brands[1:20], 
+x <- uniqueBrands[order(uniqueBrands$DOLLARS[1:60]),]
+dotchart(x$DOLLARS[1:60], labels = x$Brands[1:60], 
          cex=.7,
          main="Total Dollars by Brand", 
          xlab="Dollars")
-aggregateDataSummary <- data.frame(Units=uniqueBrands$UNITS[1:20], 
-                                   Dollars=uniqueBrands$DOLLARS[1:20], 
-                                   Total_Gallons=uniqueBrands$total_gal[1:20])
-rownames(aggregateDataSummary) <- uniqueBrands$Brands[1:20]
+aggregateDataSummary <- data.frame(Units=uniqueBrands$UNITS[1:60], 
+                                   Dollars=uniqueBrands$DOLLARS[1:60], 
+                                   Total_Gallons=uniqueBrands$total_gal[1:60])
+rownames(aggregateDataSummary) <- uniqueBrands$Brands[1:60]
 write(stargazer(aggregateDataSummary, type = "text", summary = F, flip=F, header = F), file="LA_agg_data.txt")
+write.csv(aggregateDataSummary, "LA_agg_data.csv")
 rm(x)
 
 
@@ -108,7 +109,7 @@ generate_data_frame <- function()  {
                  "STELLA ARTOIS LAGER", 
                  "BLUE MOON BELGIAN WHITE ALE")
 
-  N <- (2646000/10)* (25.5/52) # LA market size Times per capita consumption / week
+  N <- (2646000/9)* (25.5/52) # LA market size Times per capita consumption / week
   #N <- 250000* (25.5/52)
   tmp <- filter(LA_data_2010_manip, L5 %in% unqBrands)
   tmp_main <- data.frame()

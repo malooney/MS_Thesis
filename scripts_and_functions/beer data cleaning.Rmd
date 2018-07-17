@@ -154,21 +154,21 @@ main_beer_drug_and_groc_4_2010 <- read_feather("/Users/malooney/Google Drive/dig
 
 ```{r LA Market Data, cache=TRUE, include=TRUE, message=FALSE, warning=FALSE, echo=FALSE}
 
-#main_beer_drug_and_groc_4_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
+main_beer_drug_and_groc_4_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
 
-# mrkNames <- read_csv("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/scripts_and_functions/mrkNames.csv", 
-#     col_types = cols(X1 = col_skip()))
+ mrkNames <- read_csv("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/scripts_and_functions/mrkNames.csv", 
+     col_types = cols(X1 = col_skip()))
 
 
-#market1 <- "LOS ANGELES"
+market1 <- "LOS ANGELES"
 
-#LA_data <- filter(main_beer_drug_and_groc_4_2010, Market_Name==market1)
+LA_data <- filter(main_beer_drug_and_groc_4_2010, Market_Name==market1)
 
-#rm(main_beer_drug_and_groc_4_2010, mrkNames)
+rm(main_beer_drug_and_groc_4_2010, mrkNames)
 
-#LA_data_2010 <- LA_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
+LA_data_2010 <- LA_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
 
-#write_feather(LA_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/LA_data_2010_feather")
+write_feather(LA_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/LA_data_2010_feather")
 
 LA_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/LA_data_2010_feather")
 
@@ -179,20 +179,20 @@ LA_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Th
 
 ```{r Chicago Market Data, cache=TRUE, include=TRUE, message=FALSE, warning=FALSE, echo=FALSE}
 
-#main_beer_drug_and_groc_4_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
+main_beer_drug_and_groc_4_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
 
-# mrkNames <- read_csv("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/scripts_and_functions/mrkNames.csv", 
-#     col_types = cols(X1 = col_skip()))
+mrkNames <- read_csv("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/scripts_and_functions/mrkNames.csv", 
+     col_types = cols(X1 = col_skip()))
 
-#market2 <- "CHICAGO"
+market2 <- "CHICAGO"
 
-#CHICAGO_data <- filter(main_beer_drug_and_groc_4_2010, Market_Name==market2)
+CHICAGO_data <- filter(main_beer_drug_and_groc_4_2010, Market_Name==market2)
 
-#rm(main_beer_drug_and_groc_4_2010, mrkNames)
+rm(main_beer_drug_and_groc_4_2010, mrkNames)
 
-#CHICAGO_data_2010 <- CHICAGO_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
+CHICAGO_data_2010 <- CHICAGO_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
 
-#write_feather(CHICAGO_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/CHICAGO_data_2010_feather")
+write_feather(CHICAGO_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/CHICAGO_data_2010_feather")
 
 CHICAGO_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/CHICAGO_data_2010_feather")
 
@@ -205,20 +205,20 @@ CHICAGO_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*
 
 ```{r Dallas Market Data, cache=TRUE, include=TRUE, message=FALSE, warning=FALSE, echo=FALSE}
 
-#main_beer_drug_and_groc_4_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
+main_beer_drug_and_groc_4_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
 
-# mrkNames <- read_csv("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/scripts_and_functions/mrkNames.csv", 
-#     col_types = cols(X1 = col_skip()))
+mrkNames <- read_csv("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/scripts_and_functions/mrkNames.csv", 
+     col_types = cols(X1 = col_skip()))
 
-#market3 <- "DALLAS, TX"
+market3 <- "DALLAS, TX"
 
-#DALLAS_data <- filter(main_beer_drug_and_groc_4_2010, Market_Name==market3)
+DALLAS_data <- filter(main_beer_drug_and_groc_4_2010, Market_Name==market3)
 
-#rm(main_beer_drug_and_groc_4_2010, mrkNames)
+rm(main_beer_drug_and_groc_4_2010, mrkNames)
 
-#DALLAS_data_2010 <- DALLAS_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
+DALLAS_data_2010 <- DALLAS_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
 
-#write_feather(DALLAS_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/DALLAS_data_2010_feather")
+write_feather(DALLAS_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/DALLAS_data_2010_feather")
 
 DALLAS_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/DALLAS_data_2010_feather")
 

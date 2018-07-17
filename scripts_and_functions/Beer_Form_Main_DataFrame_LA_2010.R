@@ -9,7 +9,10 @@ library(stargazer)
 
 # Load Data -------------------------------------------------------------------
 LA_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/LA_data_2010_feather")
-Beer_Characteristics_Master_List <- read.csv("~/Desktop/Beer_Characteristics_Master_List.csv", stringsAsFactors=FALSE)
+
+#Beer_Characteristics_Master_List <- read.csv("~/Desktop/Beer_Characteristics_Master_List.csv", stringsAsFactors=FALSE)
+
+Beer_Characteristics_Master_List <- read.csv("~/Desktop/Beer_Characteristics_Master_List_large.csv", stringsAsFactors=FALSE)
 
 # Add volume measures ---------------------------------------------------------
 oz <- round(data.frame(oz=LA_data_2010$VOL_EQ.x* 288))
@@ -38,7 +41,9 @@ uniqueBrands_TotGal <- aggregate(total_gal~Brands, uniqueBrands, sum)
 uniqueBrands <- full_join(uniqueBrands_U, uniqueBrands_Dol, by="Brands")
 uniqueBrands <- full_join(uniqueBrands, uniqueBrands_TotGal, by="Brands")
 uniqueBrands <- arrange(uniqueBrands, desc(UNITS))
+
 rm(uniqueBrands_Dol, uniqueBrands_U, uniqueBrands_TotGal)
+
 prcntBrandRep <- (sum(uniqueBrands[1:60,2]) / sum(uniqueBrands$UNITS)) * 100
 par(mfrow=c(1,2))
 x <- uniqueBrands[order(uniqueBrands$UNITS[1:60]),]
@@ -79,7 +84,7 @@ prcntFirmRep <- (sum(uniqueFirms[1:2,2]) / nrow(uniqueFirms_all)) * 100
 uniqueConglomerates <- data.frame(table(LA_data_2010_manip$L3))
 uniqueConglomerates <- arrange(uniqueConglomerates, desc(Freq))
 
-rm(uniqueBrands_all, uniqueChains_all, uniqueFirms_all)
+rm(uniqueChains_all, uniqueFirms_all)
 
 # Function - Generate Main Data Frame -----------------------------------------
 
@@ -88,33 +93,12 @@ generate_data_frame <- function()  {
   unqWeek <- unique(LA_data_2010_manip$WEEK)
   unqChain <- unique(LA_data_2010_manip$MskdName)
   unqChain <- unqChain[-2] # remove Chain w/missing weeks
-  unqBrands <- c("BUD LIGHT", 
-                 "BUDWEISER", 
-                 "COORS LIGHT", 
-                 "MILLER LITE", 
-                 "CORONA EXTRA", 
-                 "HEINEKEN", 
-                 "TECATE", 
-                 "MILLER GENUINE DRAFT", 
-                 "MILLER HIGH LIFE", 
-                 "MODELO ESPECIAL", 
-                 "BUD LIGHT LIME", 
-                 "NEWCASTLE BROWN ALE", 
-                 "MICHELOB ULTRA", 
-                 "CORONA LIGHT", 
-                 "NATURAL LIGHT", 
-                 "COORS", 
-                 "PACIFICO CLARA", 
-                 "MILLER GENUINE DRAFT LIGHT 64", 
-                 "STELLA ARTOIS LAGER", 
-                 "BLUE MOON BELGIAN WHITE ALE")
+  unqBrands <- Beer_Characteristics_Master_List$Product_Name
 
   N <- (2646000/9)* (25.5/52) # LA market size Times per capita consumption / week
   #N <- 250000* (25.5/52)
   tmp <- filter(LA_data_2010_manip, L5 %in% unqBrands)
   tmp_main <- data.frame()
-  #i <- 1
-  #j <- 1
   k <- 1
   m <- 1
   n <- 1
@@ -128,8 +112,8 @@ generate_data_frame <- function()  {
       j <- 1
       
       for(j in seq_along(unqBrands)){
-        
         tmp3 <- filter(tmp2, L5==unqBrands[j]) 
+        #if(nrow(tmp3)!=0){
         w_dollar <- sum(tmp3$dollarPerGal)
         W <- tmp3$dollarPerGal/w_dollar
         W_mean <- sum(W*tmp3$dollarPerGal)
@@ -158,12 +142,12 @@ generate_data_frame <- function()  {
           tmp_main[n, 01] <- m
           tmp_main[n, 02] <- i
           tmp_main[n, 03] <- unqChain[k]
-          tmp_main[n, 04] <- unqWeek[i]
-          tmp_main[n, 05] <- NA
-          tmp_main[n, 06] <- NA
-          tmp_main[n, 07] <- unqBrands[j]
-          tmp_main[n, 08] <- NA
-          tmp_main[n, 09] <- NA
+          tmp_main[n, 04] <- unqWeek[1]
+          tmp_main[n, 05] <- as.character(tmp2$`Calendar week starting on`[1])
+          tmp_main[n, 06] <- as.character(tmp2$`Calendar week ending on`[1])
+          tmp_main[n, 07] <- unqBrands[j] # brand
+          tmp_main[n, 08] <- tmp3$L3[1] # Conglomerate
+          tmp_main[n, 09] <- tmp3$L4[1] # Firm
           tmp_main[n, 10] <- NA
           tmp_main[n, 11] <- NA
           tmp_main[n, 12] <- NA
@@ -187,12 +171,13 @@ generate_data_frame <- function()  {
   return(tmp_main)
   }
 
+
 LA_2010_aggregate_data <- generate_data_frame()
 
 nChains <- 6
 nWeeks <- 52 # number of weeks
 nmkt <- nChains * nWeeks # number of markets
-nbrn <- 20 # number of brands
+nbrn <- 60 # number of brands
 constant <- data.frame("constant"= rep(1, times= nmkt* nbrn))
 
 outshr <- function(share, cdid, nmkt, nbrn){ # function to calculate outshr
@@ -224,8 +209,8 @@ LA_2010_aggregate_data_subChain <- filter(LA_2010_aggregate_data,
                                           #Chain == "Chain15")#| 
                                           #Chain == "Chain84")
 
-# LA_2010_aggregate_data_subChain$outshr[LA_2010_aggregate_data_subChain$outshr <
-#                                          0] <- 0.0000001
+ LA_2010_aggregate_data_subChain$outshr[LA_2010_aggregate_data_subChain$outshr <
+                                          0] <- 0.0000001
 
 # -----------------------------------------------------------------------------
 
@@ -263,27 +248,11 @@ hist(filter(LA_2010_aggregate_data, Chain=="Chain84")$p2_Wmean,
 abline(v= mean(filter(LA_2010_aggregate_data, Chain=="Chain84")$p2_Wmean),
        col="blue")
 
-summary(lm.results <- lm( log(share) - log(outshr)~  0 + p2_Wmean + 
-                            BUD.LIGHT + 
-                            BUDWEISER + 
-                            COORS.LIGHT + 
-                            MILLER.LITE + 
-                            CORONA.EXTRA + 
-                            HEINEKEN + 
-                            TECATE + 
-                            MILLER.GENUINE.DRAFT + 
-                            MILLER.HIGH.LIFE + 
-                            MODELO.ESPECIAL + 
-                            BUD.LIGHT.LIME + 
-                            NEWCASTLE.BROWN.ALE + 
-                            MICHELOB.ULTRA + 
-                            CORONA.LIGHT + 
-                            NATURAL.LIGHT + 
-                            COORS + 
-                            PACIFICO.CLARA + 
-                            MILLER.GENUINE.DRAFT.LIGHT.64 + 
-                            STELLA.ARTOIS.LAGER + 
-                            BLUE.MOON.BELGIAN.WHITE.ALE, 
+
+lm.Brands <- paste(colnames(LA_2010_aggregate_data_subChain[87:146]), collapse=" + ")
+model.lm.Brands <- formula(paste("log(share) - log(outshr)~  0 + p2_Wmean +",
+                         lm.Brands, sep=""))
+summary(lm.results <- lm( model.lm.Brands,
                           data= LA_2010_aggregate_data_subChain))
 
 

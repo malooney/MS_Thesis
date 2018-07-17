@@ -139,26 +139,34 @@ main_beer_drug_and_groc_4 <- left_join(x=main_beer_drug_and_groc_3, y=unique_Del
 
 #write_feather(main_beer_drug_and_groc_4, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
 
-main_beer_drug_and_groc_4 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
+#main_beer_drug_and_groc_4 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
+
+main_beer_drug_and_groc_4_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
+
+# Show all potiential market names
+
+#mrkNames <- data.frame(Market_Name=unique(main_beer_drug_and_groc_4_2010$Market_Name))
+#mrkNames <- arrange(mrkNames, Market_Name)
+
+#write.csv(mrkNames, file = "mrkNames.csv")
 
 ```
 
 ```{r LA Market Data, cache=TRUE, include=TRUE, message=FALSE, warning=FALSE, echo=FALSE}
 
-main_beer_drug_and_groc_4_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
+#main_beer_drug_and_groc_4_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
 
-# Show all potiential market names
-mrkNames <- unique(main_beer_drug_and_groc_4_2010$Market_Name)
+# mrkNames <- read_csv("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/scripts_and_functions/mrkNames.csv", 
+#     col_types = cols(X1 = col_skip()))
 
-#write(mrkNames, file = "mrkNames", append = FALSE, sep = " ")
 
-market1 <- "LOS ANGELES"
+#market1 <- "LOS ANGELES"
 
-LA_data <- filter(main_beer_drug_and_groc_4_2010, Market_Name==market1)
+#LA_data <- filter(main_beer_drug_and_groc_4_2010, Market_Name==market1)
 
-rm(main_beer_drug_and_groc_4_2010, mrkNames)
+#rm(main_beer_drug_and_groc_4_2010, mrkNames)
 
-LA_data_2010 <- LA_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
+#LA_data_2010 <- LA_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
 
 #write_feather(LA_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/LA_data_2010_feather")
 
@@ -173,10 +181,8 @@ LA_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Th
 
 #main_beer_drug_and_groc_4_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
 
-# Show all potiential market names
-#mrkNames <- unique(main_beer_drug_and_groc_4_2010$Market_Name)
-
-#write(mrkNames, file = "mrkNames", append = FALSE, sep = " ")
+# mrkNames <- read_csv("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/scripts_and_functions/mrkNames.csv", 
+#     col_types = cols(X1 = col_skip()))
 
 #market2 <- "CHICAGO"
 
@@ -201,10 +207,8 @@ CHICAGO_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*
 
 #main_beer_drug_and_groc_4_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/main_beer_drug_and_groc_4_feather")
 
-#Show all potiential market names
-#mrkNames <- unique(main_beer_drug_and_groc_4_2010$Market_Name)
-
-#write(mrkNames, file = "mrkNames", append = FALSE, sep = " ")
+# mrkNames <- read_csv("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/scripts_and_functions/mrkNames.csv", 
+#     col_types = cols(X1 = col_skip()))
 
 #market3 <- "DALLAS, TX"
 
@@ -245,24 +249,24 @@ DALLAS_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*M
 # download.file(urlfile, destfile, mode="wb")
 # 
 # census <- xlsx::read.xlsx2(destfile, sheetName = "Median")
-#    
+# 
 # census <- census[c('Zip','Median..')]
 # names(census) <- c('Zip','Median')
 # census$Median <- as.character(census$Median)
 # census$Median <- as.numeric(gsub(',','',census$Median))
 # #print(head(census,5))
-#    
+# 
 # data(zipcode)
 # census$Zip <- clean.zipcodes(census$Zip)
-#    
+# 
 # census <- merge(census, zipcode, by.x='Zip', by.y='zip')
-#    
+# 
 # map <-get_map(location="united states", zoom= 4,
 #              maptype = "roadmap", source='google',color='color')
-#    
+# 
 # ggmap(map) + geom_point(
-#   aes(x=longitude, y=latitude, colour=Median), 
-#   data=census, alpha=.05, na.rm = T)  + 
+#   aes(x=longitude, y=latitude, colour=Median),
+#   data=census, alpha=.05, na.rm = T)  +
 #   scale_color_gradient(low="beige", high="blue")
    
 ```
